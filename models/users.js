@@ -2,6 +2,7 @@
 const userList = [];
 
 //add to users
-
-//export users
-export default userList;
+exports.addUser = (username, password) => {
+    const newUser = {username, password};
+    userList.push(newUser);
+  };
