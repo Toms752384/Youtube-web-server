@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+const userRoute = require('./routes/usersRoutes');
 
 //create app and port
 const app = express();
@@ -25,6 +26,9 @@ app.options('*', cors({
 
 //middleware for parsing cookies
 app.use(cookieParser());
+
+//users routes
+app.use('/users', userRoute);
 
 //start the server
 app.listen(port, () => {
