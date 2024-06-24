@@ -12,6 +12,12 @@ const port = 80;
 //middleware for parsing JSON bodies
 app.use(bodyParser.json());
 
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/ourDatabase', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
 //CORS configuration
 app.use(cors({
   origin: 'http://localhost:3000', // Allow requests from this origin
