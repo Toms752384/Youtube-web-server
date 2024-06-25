@@ -3,14 +3,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
-const userRoute = require('./routes/usersRoutes');
+const userRoutes = require('./routes/usersRoutes');
 
 //create app and port
-const app = express();
+const server = express();
 const port = 80;
 
 //middleware for parsing JSON bodies
-app.use(bodyParser.json());
+server.use(bodyParser.json());
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/ourDatabase', {
@@ -19,24 +19,24 @@ mongoose.connect('mongodb://localhost:27017/ourDatabase', {
 });
 
 //CORS configuration
-app.use(cors({
+server.use(cors({
   origin: 'http://localhost:3000', // Allow requests from this origin
   credentials: true // Allow credentials (cookies)
 }));
 
 //handle preflight requests for all routes
-app.options('*', cors({
+server.options('*', cors({
   origin: 'http://localhost:3000',
   credentials: true
 }));
 
 //middleware for parsing cookies
-app.use(cookieParser());
+server.use(cookieParser());
 
 //users routes
-app.use('/users', userRoute);
+server.use('/users', userRoutes);
 
 //start the server
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
