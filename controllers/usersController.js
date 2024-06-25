@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/usersModel');
 
+//fetch users
 const fetchUsers = async (req, res) => {
   try {
     const users = await User.fetchAllUsers();    
