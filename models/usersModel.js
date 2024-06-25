@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  avater: {
+  avatar: {
     type: String
   }
 })

@@ -4,7 +4,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/usersRoutes');
-
+const multer = require ('multer') 
 //create app and port
 const server = express();
 const port = 80;
