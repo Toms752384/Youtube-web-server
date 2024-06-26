@@ -5,18 +5,37 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/usersRoutes');
 const multer = require ('multer') 
+
+/////////////////////////////////////////////////////////////////
+const videoRoutes = require('./routes/videoRoutes');
+//////////////////////////////////////////////////////////////////
+
+
 //create app and port
 const server = express();
 const port = 80;
 
 //middleware for parsing JSON bodies
 server.use(bodyParser.json());
+///////////////////////////////////////////////////////////////////////
+server.use(bodyParser.urlencoded({ extended: false }));
+//////////////////////////////////////////////////////////////////////
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/ourDatabase', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+//////////////////////////////////////////////////////////////////////////////////////
+// mongo for video
+
+// static fields
+server.use(express.static('uploads'));
+
+// Routes
+server.use('/videos', videoRoutes);
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 //CORS configuration
 server.use(cors({
