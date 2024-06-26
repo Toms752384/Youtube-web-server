@@ -2,11 +2,12 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/usersModel');
+const jwt = require('jsonwebtoken');
 
 //fetch users
 const fetchUsers = async (req, res) => {
   try {
-    const users = await User.fetchAllUsers();    
+    const users = await User.fetchAllUsers();
     res.status(200).json({ message: 'Users fetched successfully', users });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
@@ -15,6 +16,7 @@ const fetchUsers = async (req, res) => {
 
 };
 
+//add a new user
 const addNewUser = async (req, res) => {
   if (req.file) {
     // Assuming you want to convert the image to a base64 string
@@ -30,5 +32,27 @@ const addNewUser = async (req, res) => {
   }
 };
 
-module.exports = { fetchUsers, addNewUser };
+//key to create a JWT
+const JWT_SECRET = 'secret_key';
+
+//login to an existing user
+const login = async (req, res) => {
+  try {
+    const loggedUser = await User.fetchUser(req.body.username);
+
+    //generate JWT for the user
+    const token = jwt.sign({ username: req.body.username }, JWT_SECRET, { expiresIn: '1h' });
+
+    // //set cookie
+    res.cookie('token', token, { httpOnly: true });
+
+    //send response
+    res.status(201).json({ message: 'User logged successfully', loggedUser, token: token });
+  }
+  catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+}
+
+module.exports = { fetchUsers, addNewUser, login };
 
