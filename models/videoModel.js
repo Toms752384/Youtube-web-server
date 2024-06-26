@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+// system of files in node.js for delete 
+const fs = require('fs');
+const path = require('path');
+
 const videoSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -18,7 +22,6 @@ const videoSchema = new mongoose.Schema({
   }
 });
 
-// the logic itself of the function - create one
 videoSchema.statics.uploadVideo = async function (file, body) {
   try {
     const videoUrl = `/localVideos/${file.filename}`;
@@ -35,12 +38,33 @@ videoSchema.statics.uploadVideo = async function (file, body) {
   }
 };
 
-// the logic itself of the function - get all
 videoSchema.statics.getAllVideos = async function () {
   try {
     return await this.find();
   } catch (err) {
     throw new Error('Error fetching videos: ' + err.message);
+  }
+};
+
+videoSchema.statics.deleteVideo = async function (videoId) {
+  try {
+    const video = await this.findByIdAndDelete(videoId);
+    if (video) {
+      const videoFilePath = path.join(__dirname, '../', video.videoLink);
+      fs.unlinkSync(videoFilePath); // מחיקת הקובץ מהשרת
+    }
+    return video;
+  } catch (err) {
+    throw new Error('Error deleting video: ' + err.message);
+  }
+};
+
+videoSchema.statics.editVideo = async function (videoId, updateData) {
+  try {
+    const video = await this.findByIdAndUpdate(videoId, updateData, { new: true });
+    return video;
+  } catch (err) {
+    throw new Error('Error editing video: ' + err.message);
   }
 };
 

@@ -20,3 +20,27 @@ exports.getVideos = async (req, res) => {
     res.status(500).json({ message: 'Error fetching videos', error });
   }
 };
+
+exports.deleteVideo = async (req, res) => {
+  try {
+    const video = await Video.deleteVideo(req.params.id);
+    if (!video) {
+      return res.status(404).json({ message: 'Video not found' });
+    }
+    res.status(200).json({ message: 'Video deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting video', error });
+  }
+};
+
+exports.editVideo = async (req, res) => {
+  try {
+    const video = await Video.editVideo(req.params.id, req.body);
+    if (!video) {
+      return res.status(404).json({ message: 'Video not found' });
+    }
+    res.status(200).json({ message: 'Video edited successfully', video });
+  } catch (error) {
+    res.status(500).json({ message: 'Error editing video', error });
+  }
+};
