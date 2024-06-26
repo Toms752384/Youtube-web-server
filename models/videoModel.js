@@ -1,10 +1,5 @@
-// Model of videos 
-// Manages the logic for adding, removing, and updating videos.
-
-// We want it to connect the dataBase - mongoose
 const mongoose = require('mongoose');
 
-// The data to each video - A collection
 const videoSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -16,17 +11,22 @@ const videoSchema = new mongoose.Schema({
   },
   description: {
     type: String
+  },
+  comments: {
+    type: [String],
+    default: []
   }
-})
+});
 
-// Static method to handle video upload
+// the logic itself of the function - create one
 videoSchema.statics.uploadVideo = async function (file, body) {
   try {
-    const videoUrl = `/uploads/${file.filename}`;
+    const videoUrl = `/localVideos/${file.filename}`;
     const video = new this({
       title: body.title,
       description: body.description,
-      videoLink: videoUrl
+      videoLink: videoUrl,
+      comments: body.comments || []
     });
     await video.save();
     return video;
@@ -35,7 +35,7 @@ videoSchema.statics.uploadVideo = async function (file, body) {
   }
 };
 
-// Static method to fetch all videos
+// the logic itself of the function - get all
 videoSchema.statics.getAllVideos = async function () {
   try {
     return await this.find();

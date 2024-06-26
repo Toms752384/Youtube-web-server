@@ -1,6 +1,7 @@
 const Video = require('../models/videoModel');
 
-// Handle video upload
+
+// a function to uploud a new video - create one
 exports.uploadVideo = async (req, res) => {
   try {
     const video = await Video.uploadVideo(req.file, req.body);
@@ -10,7 +11,7 @@ exports.uploadVideo = async (req, res) => {
   }
 };
 
-// Fetch all videos
+// to get all the videos
 exports.getVideos = async (req, res) => {
   try {
     const videos = await Video.getAllVideos();
