@@ -43,7 +43,7 @@ const login = async (req, res) => {
     //generate JWT for the user
     const token = jwt.sign({ username: req.body.username }, JWT_SECRET, { expiresIn: '1h' });
 
-    // //set cookie
+    //set cookie
     res.cookie('token', token, { httpOnly: true });
 
     //send response
