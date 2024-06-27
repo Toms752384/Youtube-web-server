@@ -25,4 +25,6 @@ router.post('/addUser', upload.single('avatar'), usersController.addNewUser);
 //function to log to a user from the list
 router.post('/login', usersController.login);
 
+//function to delete a user from the list
+router.post('/deleteUser', usersController.deleteUser);
 module.exports = router;

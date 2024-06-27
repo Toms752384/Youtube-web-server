@@ -52,5 +52,15 @@ userSchema.statics.fetchUser = async function(username) {
   }
 };
 
+//static function to delete a user from the list
+userSchema.statics.deleteUser = async function(username) {
+  try{
+      await this.deleteOne({username: username});
+  }
+  catch(error){
+    throw new Error('Error deleting user: ' + error.message);
+  }
+}
+
 const User = mongoose.model('User', userSchema);
 module.exports = User;
