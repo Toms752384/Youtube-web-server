@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
   }
 })
 
-// Static method to fetch all users
+//static function to fetch all users
 userSchema.statics.fetchAllUsers = async function () {
   try {
     const users = await this.find();
@@ -30,7 +30,7 @@ userSchema.statics.fetchAllUsers = async function () {
   }
 };
 
-// Static method to create a new user
+//static function to create a new user
 userSchema.statics.createUser = async function (userData) {
   try {
     const newUser = new this(userData);
@@ -38,6 +38,17 @@ userSchema.statics.createUser = async function (userData) {
     return savedUser;
   } catch (error) {
     throw new Error('Error creating user: ' + error.message);
+  }
+};
+
+//static function to fetch a user using its username
+userSchema.statics.fetchUser = async function(username) {
+  try {
+    const user = await this.find({username: username});
+    return user;
+  }
+  catch (error) {
+    throw new Error('Error fetching user: ' + error.message);
   }
 };
 

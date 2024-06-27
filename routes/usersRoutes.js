@@ -21,4 +21,8 @@ router.get('/fetchUsers', usersController.fetchUsers);
 //function to add a new user to the list
 router.post('/addUser', upload.single('avatar'), usersController.addNewUser);
 
+
+//function to log to a user from the list
+router.post('/login', usersController.login);
+
 module.exports = router;
