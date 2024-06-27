@@ -4,18 +4,22 @@ const videoController = require('../controllers/videoController');
 const multer = require('multer');
 const path = require('path');
 
-// Set up multer for file upload
+// the stack of all the videos - des to save in local
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
+  destination: function (req, file, cb) {
+    cb(null, 'localVideos/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
 });
 const upload = multer({ storage: storage });
 
 router.post('/upload', upload.single('video'), videoController.uploadVideo);
 router.get('/', videoController.getVideos);
+router.delete('/:id', videoController.deleteVideo);
+router.put('/:id', videoController.editVideo);
+
+
 
 module.exports = router;

@@ -1,10 +1,9 @@
-// Model of videos 
-// Manages the logic for adding, removing, and updating videos.
-
-// We want it to connect the dataBase - mongoose
 const mongoose = require('mongoose');
 
-// The data to each video - A collection
+// system of files in node.js for delete 
+const fs = require('fs');
+const path = require('path');
+
 const videoSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -16,17 +15,21 @@ const videoSchema = new mongoose.Schema({
   },
   description: {
     type: String
+  },
+  comments: {
+    type: [String],
+    default: []
   }
-})
+});
 
-// Static method to handle video upload
 videoSchema.statics.uploadVideo = async function (file, body) {
   try {
-    const videoUrl = `/uploads/${file.filename}`;
+    const videoUrl = `/localVideos/${file.filename}`;
     const video = new this({
       title: body.title,
       description: body.description,
-      videoLink: videoUrl
+      videoLink: videoUrl,
+      comments: body.comments || []
     });
     await video.save();
     return video;
@@ -35,12 +38,33 @@ videoSchema.statics.uploadVideo = async function (file, body) {
   }
 };
 
-// Static method to fetch all videos
 videoSchema.statics.getAllVideos = async function () {
   try {
     return await this.find();
   } catch (err) {
     throw new Error('Error fetching videos: ' + err.message);
+  }
+};
+
+videoSchema.statics.deleteVideo = async function (videoId) {
+  try {
+    const video = await this.findByIdAndDelete(videoId);
+    if (video) {
+      const videoFilePath = path.join(__dirname, '../', video.videoLink);
+      fs.unlinkSync(videoFilePath); // מחיקת הקובץ מהשרת
+    }
+    return video;
+  } catch (err) {
+    throw new Error('Error deleting video: ' + err.message);
+  }
+};
+
+videoSchema.statics.editVideo = async function (videoId, updateData) {
+  try {
+    const video = await this.findByIdAndUpdate(videoId, updateData, { new: true });
+    return video;
+  } catch (err) {
+    throw new Error('Error editing video: ' + err.message);
   }
 };
 

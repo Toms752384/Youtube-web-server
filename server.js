@@ -1,61 +1,46 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/usersRoutes');
-const multer = require ('multer') 
-
-/////////////////////////////////////////////////////////////////
 const videoRoutes = require('./routes/videoRoutes');
-//////////////////////////////////////////////////////////////////
+const multer = require('multer');
 
-
-//create app and port
 const server = express();
 const port = 80;
 
-//middleware for parsing JSON bodies
 server.use(bodyParser.json());
-///////////////////////////////////////////////////////////////////////
 server.use(bodyParser.urlencoded({ extended: false }));
-//////////////////////////////////////////////////////////////////////
 
-// Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/ourDatabase', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-//////////////////////////////////////////////////////////////////////////////////////
-// mongo for video
 
-// static fields
-server.use(express.static('uploads'));
+// to add the videos to the folder - local Videos
+server.use('/localVideos', express.static(path.join(__dirname, 'localVideos')));
 
-// Routes
+// connect the videos
 server.use('/videos', videoRoutes);
 
-//////////////////////////////////////////////////////////////////////////////////////
-
-//CORS configuration
 server.use(cors({
-  origin: 'http://localhost:3000', // Allow requests from this origin
-  credentials: true // Allow credentials (cookies)
+  origin: 'http://localhost:3000',
+  credentials: true
 }));
 
-//handle preflight requests for all routes
 server.options('*', cors({
   origin: 'http://localhost:3000',
   credentials: true
 }));
 
-//middleware for parsing cookies
 server.use(cookieParser());
-
-//users routes
 server.use('/users', userRoutes);
 
-//start the server
+// this is fro the HTML i need to take it downnnnnnnnnnnnn
+server.use(express.static('public'));
+
 server.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });

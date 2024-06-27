@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Video</title>
+    <style>
+        .edit-form {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload Video</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea><br><br>
+
+        <label for="video">Select video:</label>
+        <input type="file" id="video" name="video" accept="video/*" required><br><br>
+
+        <button type="submit">Upload</button>
+    </form>
+
+    <h2>Uploaded Videos</h2>
+    <div id="videoList"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('video', document.getElementById('video').files[0]);
+
+            try {
+                const response = await fetch('/videos/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Video uploaded successfully');
+                    loadVideos();
+                } else {
+                    alert(`Error: ${result.message}`);
+                }
+            } catch (error) {
+                console.error('Error uploading video:', error);
+                alert('Error uploading video');
+            }
+        });
+
+        async function loadVideos() {
+            try {
+                const response = await fetch('/videos');
+                const videos = await response.json();
+                const videoList = document.getElementById('videoList');
+                videoList.innerHTML = '';
+                videos.forEach(video => {
+                    const videoItem = document.createElement('div');
+                    const videoSrc = video.videoLink.startsWith('/localVideos') ? video.videoLink : `/localVideos/${video.videoLink}`;
+                    videoItem.innerHTML = `
+                        <h3>${video.title}</h3>
+                        <p>${video.description}</p>
+                        <video src="${videoSrc}" controls width="400"></video>
+                        <button onclick="deleteVideo('${video._id}')">Delete</button>
+                        <button onclick="showEditForm('${video._id}', '${video.title}', '${video.description}')">Edit</button>
+                        <form class="edit-form" id="edit-form-${video._id}" onsubmit="editVideo(event, '${video._id}')">
+                            <input type="text" name="title" value="${video.title}" required>
+                            <textarea name="description">${video.description}</textarea>
+                            <button type="submit">Save</button>
+                            <button type="button" onclick="hideEditForm('${video._id}')">Cancel</button>
+                        </form>
+                    `;
+                    videoList.appendChild(videoItem);
+                });
+            } catch (error) {
+                console.error('Error fetching videos:', error);
+            }
+        }
+
+        function showEditForm(id, title, description) {
+            document.getElementById(`edit-form-${id}`).style.display = 'block';
+        }
+
+        function hideEditForm(id) {
+            document.getElementById(`edit-form-${id}`).style.display = 'none';
+        }
+
+        async function editVideo(event, id) {
+            event.preventDefault();
+            const form = event.target;
+            const title = form.title.value;
+            const description = form.description.value;
+
+            const response = await fetch(`/videos/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title, description })
+            });
+
+            if (response.ok) {
+                alert('Video edited successfully');
+                loadVideos();
+            } else {
+                const result = await response.json();
+                alert(`Error: ${result.message}`);
+            }
+        }
+
+        async function deleteVideo(id) {
+            try {
+                const response = await fetch(`/videos/${id}`, {
+                    method: 'DELETE'
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Video deleted successfully');
+                    loadVideos();
+                } else {
+                    alert(`Error: ${result.message}`);
+                }
+            } catch (error) {
+                console.error('Error deleting video:', error);
+                alert('Error deleting video');
+            }
+        }
+
+        // Load videos on page load
+        loadVideos();
+    </script>
+</body>
+</html>
