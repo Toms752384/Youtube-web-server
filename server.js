@@ -38,7 +38,7 @@ server.options('*', cors({
 server.use(cookieParser());
 server.use('/users', userRoutes);
 
-// this is fro the HTML i need to take it down
+// this is fro the HTML i need to take it downnnnnnnnnnnnn
 server.use(express.static('public'));
 
 server.listen(port, () => {
