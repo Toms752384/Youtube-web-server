@@ -96,7 +96,7 @@
                 const comments = await response.json();
                 const commentsDiv = document.getElementById(`comments-${videoId}`);
                 commentsDiv.innerHTML = '';
-                comments.forEach(comment => {
+                comments.comments.forEach(comment => {
                     const commentItem = document.createElement('div');
                     commentItem.innerHTML = `
                         <p>${comment.content}</p>
