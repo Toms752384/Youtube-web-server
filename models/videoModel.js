@@ -4,23 +4,48 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 
+// the schema for a collection video
 const videoSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true
   },
-  videoLink: {
+  // // to coneect which user uploueded it
+  // uploadedBy: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: true
+  // },
+  // timeOfUpload: {
+  //   type: Date,
+  //   default: Date.now
+  // },
+  // subscribers: {
+  //   type: Number,
+  //   default: 0
+  // },
+  // likes: {
+  //   type: Number,
+  //   default: 0
+  // },
+  description: {
     type: String,
     required: true
   },
-  description: {
-    type: String
+  // avatar: {
+  //   type: String,
+  //   required: true
+  // },
+  videoLink: {
+    type: String,
+    required: true
   },
   comments: {
     type: [String],
     default: []
   }
 });
+
 
 videoSchema.statics.uploadVideo = async function (file, body) {
   try {
