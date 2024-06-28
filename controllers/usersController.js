@@ -52,7 +52,20 @@ const login = async (req, res) => {
   catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
+};
+
+//delete a user from the database
+const deleteUser = async (req, res) => {
+  try {
+    await User.deleteUser(req.body.username);
+
+    //send response
+    res.status(201).json({ message: 'User deleted successfully' });
+  }
+  catch(error){
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
 }
 
-module.exports = { fetchUsers, addNewUser, login };
+module.exports = { fetchUsers, addNewUser, login, deleteUser };
 
