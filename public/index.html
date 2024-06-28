@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Video</title>
     <style>
-        .edit-form {
+        .edit-form, .edit-comment-form {
             display: none;
         }
     </style>
@@ -75,12 +75,126 @@
                             <button type="submit">Save</button>
                             <button type="button" onclick="hideEditForm('${video._id}')">Cancel</button>
                         </form>
+                        <h4>Comments</h4>
+                        <div id="comments-${video._id}"></div>
+                        <form onsubmit="addComment(event, '${video._id}')">
+                            <textarea name="content" placeholder="Add a comment" required></textarea>
+                            <button type="submit">Add Comment</button>
+                        </form>
                     `;
                     videoList.appendChild(videoItem);
+                    loadComments(video._id);
                 });
             } catch (error) {
                 console.error('Error fetching videos:', error);
             }
+        }
+
+        async function loadComments(videoId) {
+            try {
+                const response = await fetch(`/videos/${videoId}/comments`);
+                const comments = await response.json();
+                const commentsDiv = document.getElementById(`comments-${videoId}`);
+                commentsDiv.innerHTML = '';
+                comments.forEach(comment => {
+                    const commentItem = document.createElement('div');
+                    commentItem.innerHTML = `
+                        <p>${comment.content}</p>
+                        <button onclick="showEditCommentForm('${comment._id}', '${comment.content}')">Edit</button>
+                        <button onclick="deleteComment('${comment._id}', '${videoId}')">Delete</button>
+                        <form class="edit-comment-form" id="edit-comment-form-${comment._id}" onsubmit="editComment(event, '${comment._id}', '${videoId}')">
+                            <textarea name="content" required>${comment.content}</textarea>
+                            <button type="submit">Save</button>
+                            <button type="button" onclick="hideEditCommentForm('${comment._id}')">Cancel</button>
+                        </form>
+                    `;
+                    commentsDiv.appendChild(commentItem);
+                });
+            } catch (error) {
+                console.error('Error fetching comments:', error);
+            }
+        }
+
+        async function addComment(event, videoId) {
+            event.preventDefault();
+            const form = event.target;
+            const content = form.content.value;
+
+            try {
+                const response = await fetch(`/videos/${videoId}/addComment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ content })
+                });
+
+                if (response.ok) {
+                    alert('Comment added successfully');
+                    loadComments(videoId);
+                    form.reset();
+                } else {
+                    const result = await response.json();
+                    alert(`Error: ${result.message}`);
+                }
+            } catch (error) {
+                console.error('Error adding comment:', error);
+                alert('Error adding comment');
+            }
+        }
+
+        async function editComment(event, commentId, videoId) {
+            event.preventDefault();
+            const form = event.target;
+            const content = form.content.value;
+
+            try {
+                const response = await fetch(`/videos/comments/${commentId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ content })
+                });
+
+                if (response.ok) {
+                    alert('Comment edited successfully');
+                    loadComments(videoId);
+                    hideEditCommentForm(commentId);
+                } else {
+                    const result = await response.json();
+                    alert(`Error: ${result.message}`);
+                }
+            } catch (error) {
+                console.error('Error editing comment:', error);
+                alert('Error editing comment');
+            }
+        }
+
+        async function deleteComment(commentId, videoId) {
+            try {
+                const response = await fetch(`/videos/comments/${commentId}`, {
+                    method: 'DELETE'
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Comment deleted successfully');
+                    loadComments(videoId);
+                } else {
+                    alert(`Error: ${result.message}`);
+                }
+            } catch (error) {
+                console.error('Error deleting comment:', error);
+                alert('Error deleting comment');
+            }
+        }
+
+        function showEditCommentForm(commentId, content) {
+            document.getElementById(`edit-comment-form-${commentId}`).style.display = 'block';
+        }
+
+        function hideEditCommentForm(commentId) {
+            document.getElementById(`edit-comment-form-${commentId}`).style.display = 'none';
         }
 
         function showEditForm(id, title, description) {

@@ -16,10 +16,10 @@ const videoSchema = new mongoose.Schema({
   description: {
     type: String
   },
-  comments: {
-    type: [String],
-    default: []
-  }
+  comments: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Comment' 
+    }]
 });
 
 videoSchema.statics.uploadVideo = async function (file, body) {
@@ -27,7 +27,7 @@ videoSchema.statics.uploadVideo = async function (file, body) {
     const videoUrl = `/localVideos/${file.filename}`;
     const video = new this({
       title: body.title,
-      description: body.description,
+      description: body.description || [],
       videoLink: videoUrl,
       comments: body.comments || []
     });
