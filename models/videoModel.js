@@ -10,33 +10,38 @@ const videoSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  // // to coneect which user uploueded it
-  // uploadedBy: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'User',
-  //   required: true
-  // },
-  // timeOfUpload: {
-  //   type: Date,
-  //   default: Date.now
-  // },
-  // subscribers: {
-  //   type: Number,
-  //   default: 0
-  // },
-  // likes: {
-  //   type: Number,
-  //   default: 0
-  // },
+  artist: { //fix this in order to connet with thie artist user
+    type: String,
+    required: true
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'User',
+    // required: true
+  },
+  views: {
+    type: Number,
+    required: true
+  },
+  time: {
+    type: Date,
+    default: Date.now
+  },
+  subscribers: {
+    type: Number,
+    default: 0
+  },
+  likes: {
+    type: Number,
+    default: 0
+  },
   description: {
     type: String,
     required: true
   },
-  // avatar: {
-  //   type: String,
-  //   required: true
-  // },
-  videoLink: {
+  avatar: {
+    type: String,
+    required: true
+  },
+  videoUrl: {
     type: String,
     required: true
   },
@@ -49,11 +54,17 @@ const videoSchema = new mongoose.Schema({
 
 videoSchema.statics.uploadVideo = async function (file, body) {
   try {
-    const videoUrl = `/localVideos/${file.filename}`;
+    const videLink = `/localVideos/${file.filename}`;
     const video = new this({
       title: body.title,
-      description: body.description || [],
-      videoLink: videoUrl,
+      artist: body.artist || "title",
+      views: body.views || 0,
+      // time: body.time || "0", - time will be set in schema
+      subscribers: body.subscribers || 0,
+      likes: body.likes || 0,
+      description: body.description || "",
+      avatar: body.avatar || "",
+      videoUrl: videLink,
       comments: body.comments || []
     });
     await video.save();
@@ -76,7 +87,7 @@ videoSchema.statics.deleteVideo = async function (videoId) {
     const video = await this.findByIdAndDelete(videoId);
     if (video) {
       const videoFilePath = path.join(__dirname, '../', video.videoLink);
-      fs.unlinkSync(videoFilePath); // מחיקת הקובץ מהשרת
+      fs.unlinkSync(videoFilePath); //deleting file fro, server
     }
     return video;
   } catch (err) {

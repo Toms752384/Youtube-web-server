@@ -1,7 +1,7 @@
 const Video = require('../models/videoModel');
 
 
-// a function to uploud a new video - create one
+//function to uploud a new video - creates one
 exports.uploadVideo = async (req, res) => {
   try {
     const video = await Video.uploadVideo(req.file, req.body);
@@ -11,11 +11,11 @@ exports.uploadVideo = async (req, res) => {
   }
 };
 
-// to get all the videos
+//function to get all the videos - start here
 exports.getVideos = async (req, res) => {
   try {
     const videos = await Video.getAllVideos();
-    res.status(200).json(videos);
+    res.status(200).json({ message: 'Videos fetched successfully', videos });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching videos', error });
   }
