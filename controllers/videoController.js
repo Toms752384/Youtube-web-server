@@ -11,7 +11,7 @@ exports.uploadVideo = async (req, res) => {
   }
 };
 
-//function to get all the videos - start here
+//function to get all the videos
 exports.getVideos = async (req, res) => {
   try {
     const videos = await Video.getAllVideos();
@@ -21,6 +21,7 @@ exports.getVideos = async (req, res) => {
   }
 };
 
+//function to delete video from the server
 exports.deleteVideo = async (req, res) => {
   try {
     const video = await Video.deleteVideo(req.params.id);
@@ -33,6 +34,7 @@ exports.deleteVideo = async (req, res) => {
   }
 };
 
+//function to edit a video in the list
 exports.editVideo = async (req, res) => {
   try {
     const video = await Video.editVideo(req.params.id, req.body);

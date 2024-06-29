@@ -54,7 +54,7 @@ const videoSchema = new mongoose.Schema({
 
 videoSchema.statics.uploadVideo = async function (file, body) {
   try {
-    const videLink = `/localVideos/${file.filename}`;
+    const videoLink = `/localVideos/${file.filename}`;
     const video = new this({
       title: body.title,
       artist: body.artist || "title",
@@ -64,7 +64,7 @@ videoSchema.statics.uploadVideo = async function (file, body) {
       likes: body.likes || 0,
       description: body.description || "",
       avatar: body.avatar || "",
-      videoUrl: videLink,
+      videoUrl: videoLink,
       comments: body.comments || []
     });
     await video.save();
@@ -76,7 +76,11 @@ videoSchema.statics.uploadVideo = async function (file, body) {
 
 videoSchema.statics.getAllVideos = async function () {
   try {
-    return await this.find();
+    const videos = await this.find();
+    return videos.map(video => {
+      video.videoUrl = `http://localhost:80${video.videoUrl}`;
+      return video;
+    });
   } catch (err) {
     throw new Error('Error fetching videos: ' + err.message);
   }

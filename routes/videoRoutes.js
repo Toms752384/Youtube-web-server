@@ -5,7 +5,7 @@ const commentController = require('../controllers/commentController');
 const multer = require('multer');
 const path = require('path');
 
-// the stack of all the videos - des to save in local
+//the stack of all the videos - des to save in local
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'localVideos/');
@@ -16,13 +16,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// paths for videos
+//paths for videos
 router.post('/upload', upload.single('video'), videoController.uploadVideo);
-router.get('/', videoController.getVideos); //start here
+router.get('/fetchVideos', videoController.getVideos); 
 router.delete('/:id', videoController.deleteVideo);
 router.put('/:id', videoController.editVideo);
 
-// paths for comments in videos
+//paths for comments in videos
 router.post('/:videoId/addComment', commentController.addComment);
 router.get('/:videoId/comments', commentController.getComments);
 router.put('/comments/:commentId', commentController.editComment); 
