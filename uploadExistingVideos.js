@@ -20,12 +20,12 @@ const localVideosPath = path.join(__dirname, 'localVideos');
 async function uploadVideo(filePath) {
   const fileName = path.basename(filePath);
   const title = path.parse(fileName).name; // Use file name as title - fix this
-  const artist = "title";
+  const artist = "artist"; //change!
   const views = 0;
   const subscribers = 0;
   const likes = 0;
   const description = `Uploaded from ${fileName}`;
-  const avatar = "fdg";
+  const avatar = "fdg"; //use the defualt - fix this
   const comments = [];
 
   const file = {
