@@ -14,7 +14,10 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   }
 });
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 * 1024 } // מגביל ל-5GB
+});
 
 //paths for videos
 router.post('/upload', upload.single('video'), videoController.uploadVideo);
