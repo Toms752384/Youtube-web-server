@@ -17,7 +17,8 @@ const port = 80;
 // server.use(bodyParser.urlencoded({ extended: false }));
 
 server.use(bodyParser.json({ limit: '5gb' }));
-server.use(bodyParser.urlencoded({ limit: '5gb', extended: true }));
+server.use(bodyParser.urlencoded({ limit: '5gb', extended: true, parameterLimit: 1000000 }));
+
 
 /////////////////////////////////////////////////////////////////////////////
 //connect to databse
