@@ -1,7 +1,7 @@
 const Video = require('../models/videoModel');
 
 
-// a function to uploud a new video - create one
+//function to uploud a new video - creates one
 exports.uploadVideo = async (req, res) => {
   try {
     const video = await Video.uploadVideo(req.file, req.body);
@@ -11,16 +11,17 @@ exports.uploadVideo = async (req, res) => {
   }
 };
 
-// to get all the videos
+//function to get all the videos
 exports.getVideos = async (req, res) => {
   try {
     const videos = await Video.getAllVideos();
-    res.status(200).json(videos);
+    res.status(200).json({ message: 'Videos fetched successfully', videos });
   } catch (error) {
     res.status(500).json({ message: 'Error fetching videos', error });
   }
 };
 
+//function to delete video from the server
 exports.deleteVideo = async (req, res) => {
   try {
     const video = await Video.deleteVideo(req.params.id);
@@ -33,6 +34,7 @@ exports.deleteVideo = async (req, res) => {
   }
 };
 
+//function to edit a video in the list
 exports.editVideo = async (req, res) => {
   try {
     const video = await Video.editVideo(req.params.id, req.body);

@@ -19,17 +19,22 @@ const localVideosPath = path.join(__dirname, 'localVideos');
 // Function to upload a video
 async function uploadVideo(filePath) {
   const fileName = path.basename(filePath);
-  const title = path.parse(fileName).name; // Use file name as title
+  const title = path.parse(fileName).name; // Use file name as title - fix this
+  const artist = "artist"; //change!
+  const views = 0;
+  const subscribers = 0;
+  const likes = 0;
   const description = `Uploaded from ${fileName}`;
+  const avatar = "fdg"; //use the defualt - fix this
+  const comments = [];
 
-  // Create a file object to simulate multer's file object
   const file = {
     filename: fileName,
     path: filePath
   };
 
   try {
-    const video = await Video.uploadVideo(file, { title, description });
+    const video = await Video.uploadVideo(file, { title, artist, views, subscribers, likes, avatar, description, comments });
     console.log(`Video uploaded: ${video.title}`);
   } catch (err) {
     console.error(`Error uploading video: ${err.message}`);
