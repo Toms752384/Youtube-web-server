@@ -51,29 +51,6 @@ const videoSchema = new mongoose.Schema({
     }]
 });
 
-
-// videoSchema.statics.uploadVideo = async function (file, body) {
-//   try {
-//     const videoLink = `/localVideos/${file.filename}`;
-//     const video = new this({
-//       title: body.title,
-//       artist: body.artist || "title",
-//       views: body.views || 0,
-//       // time: body.time || "0", - time will be set in schema
-//       subscribers: body.subscribers || 0,
-//       likes: body.likes || 0,
-//       description: body.description || "",
-//       avatar: body.avatar || "",
-//       videoUrl: videoLink,
-//       comments: body.comments || []
-//     });
-  
-//     return await video.save();
-//   } catch (err) {
-//     throw new Error('Error saving video: ' + err.message);
-//   }
-// };
-
 videoSchema.statics.uploadVideo = async function (file, body) {
   try {
     const videoLink = `/localVideos/${file.filename}`;

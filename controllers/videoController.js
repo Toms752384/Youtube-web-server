@@ -1,29 +1,12 @@
 const Video = require('../models/videoModel');
 
-
-//function to uploud a new video - creates one
-// exports.uploadVideo = async (req, res) => {
-//   try {
-//     const video = await Video.uploadVideo(req.file, req.body);
-//     res.status(201).json({ message: 'Video uploaded successfully', video });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error uploading video', error });
-//   }
-// };
-
 exports.uploadVideo = async (req, res) => {
   try {
+    //log the request
     console.log('Received file:', req.file);
     console.log('Received body:', req.body);
 
-    // בדוק אם הקובץ קיים בתיקייה
-    // const filePath = path.join(__dirname, '../localVideos', req.file.filename);
-    // if (fs.existsSync(filePath)) {
-    //   console.log('File saved successfully at:', filePath);
-    // } else {
-    //   console.error('File not found at:', filePath);
-    // }
-
+    //call the upload function
     const video = await Video.uploadVideo(req.file, req.body);
     res.status(201).json({ message: 'Video uploaded successfully', video });
   } catch (error) {
