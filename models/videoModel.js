@@ -90,9 +90,10 @@ videoSchema.statics.getAllVideos = async function () {
 videoSchema.statics.deleteVideo = async function (videoId) {
   try {
     const video = await this.findByIdAndDelete(videoId);
+    console.log("!!!!!");
     if (video) {
-      const videoFilePath = path.join(__dirname, '../', video.videoLink);
-      fs.unlinkSync(videoFilePath); //deleting file fro, server
+      const videoFilePath = path.join(__dirname, '../localVideos', path.basename(video.videoUrl));
+      fs.unlinkSync(videoFilePath); //deleting file from server
     }
     return video;
   } catch (err) {
