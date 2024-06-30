@@ -1,12 +1,16 @@
 const Video = require('../models/videoModel');
 
-
-//function to uploud a new video - creates one
 exports.uploadVideo = async (req, res) => {
   try {
+    //log the request
+    console.log('Received file:', req.file);
+    console.log('Received body:', req.body);
+
+    //call the upload function
     const video = await Video.uploadVideo(req.file, req.body);
     res.status(201).json({ message: 'Video uploaded successfully', video });
   } catch (error) {
+    console.error('Error uploading video:', error.message);
     res.status(500).json({ message: 'Error uploading video', error });
   }
 };

@@ -12,9 +12,9 @@ const multer = require('multer');
 const server = express();
 const port = 80;
 
-//parsing json formats
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ extended: false }));
+//limit - add more?
+server.use(bodyParser.json({ limit: '5gb' }));
+server.use(bodyParser.urlencoded({ limit: '5gb', extended: true, parameterLimit: 1000000 }));
 
 //connect to databse
 mongoose.connect('mongodb://localhost:27017/ourDatabase', {
