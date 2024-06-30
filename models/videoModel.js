@@ -90,10 +90,10 @@ videoSchema.statics.getAllVideos = async function () {
 videoSchema.statics.deleteVideo = async function (videoId) {
   try {
     const video = await this.findByIdAndDelete(videoId);
-    console.log("!!!!!");
     if (video) {
+      //deleting file from server
       const videoFilePath = path.join(__dirname, '../localVideos', path.basename(video.videoUrl));
-      fs.unlinkSync(videoFilePath); //deleting file from server
+      fs.unlinkSync(videoFilePath); 
     }
     return video;
   } catch (err) {
@@ -103,7 +103,7 @@ videoSchema.statics.deleteVideo = async function (videoId) {
 
 videoSchema.statics.editVideo = async function (videoId, updateData) {
   try {
-    const video = await this.findByIdAndUpdate(videoId, updateData, { new: true });
+    const video = await this.findByIdAndUpdate(videoId, { $set: updateData }, { new: true }); //check this
     return video;
   } catch (err) {
     throw new Error('Error editing video: ' + err.message);
