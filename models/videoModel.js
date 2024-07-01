@@ -87,6 +87,19 @@ videoSchema.statics.getAllVideos = async function () {
   }
 };
 
+videoSchema.statics.getVideo = async function (videoId) {
+  try{
+    const video = await this.findById(videoId);
+    if (!video) {
+      throw new Error('Video not found');
+    }
+    return video;
+  }
+  catch(error){
+    throw new Error('Error fetching videos: ' + error.message);
+  }
+}
+
 videoSchema.statics.deleteVideo = async function (videoId) {
   try {
     const video = await this.findByIdAndDelete(videoId);
@@ -103,7 +116,7 @@ videoSchema.statics.deleteVideo = async function (videoId) {
 
 videoSchema.statics.editVideo = async function (videoId, updateData) {
   try {
-    const video = await this.findByIdAndUpdate(videoId, { $set: updateData }, { new: true }); //check this
+    const video = await this.findByIdAndUpdate(videoId, { $set: updateData }, { new: true });
     return video;
   } catch (err) {
     throw new Error('Error editing video: ' + err.message);

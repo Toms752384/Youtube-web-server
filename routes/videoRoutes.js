@@ -24,6 +24,7 @@ const upload = multer({
 //paths for videos
 router.post('/upload', upload.single('video'), videoController.uploadVideo);
 router.get('/fetchVideos', videoController.getVideos); 
+router.get('/fetchVideo/:id', videoController.getVideo);
 router.delete('/:id', videoController.deleteVideo); //change route to be deleteVideo/:id
 router.put('/:id', videoController.editVideo); //change route to be editVideo/:id
 
