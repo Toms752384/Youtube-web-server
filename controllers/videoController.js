@@ -27,8 +27,10 @@ exports.getVideos = async (req, res) => {
 
 //function to delete video from the server
 exports.deleteVideo = async (req, res) => {
+  console.log(`Attempting to delete video with ID: ${req.params.id}`);
   try {
     const video = await Video.deleteVideo(req.params.id);
+    console.log(video);
     if (!video) {
       return res.status(404).json({ message: 'Video not found' });
     }
@@ -41,6 +43,7 @@ exports.deleteVideo = async (req, res) => {
 //function to edit a video in the list
 exports.editVideo = async (req, res) => {
   try {
+    console.log(`Attempting to edit video with ID: ${req.params.id}`);
     const video = await Video.editVideo(req.params.id, req.body);
     if (!video) {
       return res.status(404).json({ message: 'Video not found' });

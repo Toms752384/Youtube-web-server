@@ -12,8 +12,11 @@ const fileFilter = (req, file, cb) => {
     cb(null, false); // reject file
   }
 };
-
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 * 1024 } // מגביל ל-5GB
+});
 
 //function to fetch all the users
 router.get('/fetchUsers', usersController.fetchUsers);

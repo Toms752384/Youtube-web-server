@@ -14,16 +14,18 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   }
 });
+
+//limit tot 5 gb
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 5 * 1024 * 1024 * 1024 } // מגביל ל-5GB
+  limits: { fileSize: 5 * 1024 * 1024 * 1024 }
 });
 
 //paths for videos
 router.post('/upload', upload.single('video'), videoController.uploadVideo);
 router.get('/fetchVideos', videoController.getVideos); 
-router.delete('/:id', videoController.deleteVideo);
-router.put('/:id', videoController.editVideo);
+router.delete('/:id', videoController.deleteVideo); //change route to be deleteVideo/:id
+router.put('/:id', videoController.editVideo); //change route to be editVideo/:id
 
 //paths for comments in videos
 router.post('/:videoId/addComment', commentController.addComment);
