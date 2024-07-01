@@ -24,6 +24,7 @@ mongoose.connect('mongodb://localhost:27017/ourDatabase', {
 
 //add the videos to the folder - local Videos
 server.use('/localVideos', express.static(path.join(__dirname, 'localVideos')));
+server.use('/public', express.static(path.join(__dirname, 'public')));
 
 //cors configuration
 server.use(cors({
