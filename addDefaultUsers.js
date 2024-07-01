@@ -4,9 +4,9 @@ const User = require('./models/usersModel');
 // פונקציה להוספת משתמשי ברירת מחדל
 async function addDefaultUsers() {
   const defaultUsers = [
-    { username: 'Tom Sasson', password: 'tom2002!A', nickname: 'Tom the king', avatar: '/public/Tom.png' },
-    { username: 'Alon Livne', password: 'alom2002!A', nickname: 'Alon the king', avatar: '/public/Alon.png' },
-    { username: 'Maayan Ifergan', password: 'maayan2002!A', nickname: 'Maayan the Queen', avatar: '/public/defualtAvatar.png' }
+    { username: 'Tom Sasson', password: 'tom2002!A', nickname: 'Tom the king', avatar: '/localPhotos/Tom.png' },
+    { username: 'Alon Livne', password: 'alom2002!A', nickname: 'Alon the king', avatar: '/localPhotos/Alon.png' },
+    { username: 'Maayan Ifergan', password: 'maayan2002!A', nickname: 'Maayan the Queen', avatar: '/localPhotos/defualtAvatar.png' }
   ];
 
   for (const userData of defaultUsers) {

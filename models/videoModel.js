@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 // system of files in node.js for delete 
 const fs = require('fs');
 const path = require('path');
-const { type } = require('os');
 
 // the schema for a collection video
 const videoSchema = new mongoose.Schema({
@@ -11,9 +10,12 @@ const videoSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  artist: { 
+  artist: { //fix this in order to connet with thie artist user
     type: String,
     required: true
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'User',
+    // required: true
   },
   views: {
     type: Number,
@@ -45,30 +47,31 @@ const videoSchema = new mongoose.Schema({
   },
   comments: [{ 
     type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Comment'
-  }]
+      ref: 'Comment' 
+    }]
 });
-
 
 videoSchema.statics.uploadVideo = async function (file, body) {
   try {
     const videoLink = `/localVideos/${file.filename}`;
-    const video = new this({
+    const videoData = {
       title: body.title,
       artist: body.artist || "title",
       views: body.views || 0,
-      // time: body.time || "0", - time will be set in schema
       subscribers: body.subscribers || 0,
       likes: body.likes || 0,
       description: body.description || "",
       avatar: body.avatar || "",
       videoUrl: videoLink,
-      comments: body.comments || []
-    });
-    await video.save();
-    return video;
-  } catch (err) {
-    throw new Error('Error saving video: ' + err.message);
+      comments: JSON.parse(body.comments) || []
+    };
+    const newVideo = new this(videoData);
+    const savedVideo = await newVideo.save();
+    console.log('Video saved to MongoDB successfully:', savedVideo);
+    return savedVideo;
+  } catch (error) {
+    console.error('Error creating video:', error.message);
+    throw new Error('Error creating video: ' + error.message);
   }
 };
 
