@@ -22,12 +22,14 @@ const upload = multer({
 });
 
 //correct paths for videos
-router.get('/:id/videos', videoController.getVideosByUserId); //debug!! 
-
+router.get('/:id/videos', videoController.getVideosByUserId); //oved noder
+router.post('/:id/videos', upload.single('video'), videoController.uploadVideo); //noder neder
+router.get('/:id/videos/:pid', videoController.getVideo); //metoraf
+router.put('/:id/videos/:pid', videoController.editVideo); //yey
 //paths for videos
-router.post('/upload', upload.single('video'), videoController.uploadVideo);
+// router.post('/upload/', upload.single('video'), videoController.uploadVideo);
 router.get('/fetchVideos', videoController.getVideos); 
-router.get('/fetchVideo/:id', videoController.getVideo);
+// router.get('/fetchVideo/:id', videoController.getVideo);
 router.delete('/:id', videoController.deleteVideo); 
 router.put('/:id', videoController.editVideo); 
 
