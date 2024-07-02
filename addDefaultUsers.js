@@ -6,7 +6,7 @@ async function addDefaultUsers() {
   const defaultUsers = [
     { username: 'Tom Sasson', password: 'tom2002!A', nickname: 'Tom the king', avatar: '/localPhotos/Tom.png' },
     { username: 'Alon Livne', password: 'alom2002!A', nickname: 'Alon the king', avatar: '/localPhotos/Alon.png' },
-    { username: 'Maayan Ifergan', password: 'maayan2002!A', nickname: 'Maayan the Queen', avatar: '/localPhotos/defualtAvatar.png' }
+    { username: 'Maayan Ifergan', password: 'maayan2002!A', nickname: 'Maayan the Queen', avatar: '/localPhotos/Maayan.png' }
   ];
 
   for (const userData of defaultUsers) {
