@@ -68,3 +68,25 @@ exports.editVideo = async (req, res) => {
     res.status(500).json({ message: 'Error editing video', error });
   }
 };
+
+////////////////////////////////////////////////////////////////
+exports.getVideosByUserId = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const videos = await Video.getVideosByUserId(userId);
+    res.status(200).json({ message: 'Videos fetched successfully', videos : videos });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching videos by user ID', error });
+  }
+};
+////////////////////////////////////////////////////////////////
+
+
+// exports.getVideosByUserId = async (req, res) => {
+//   try {
+//     const videos = await Video.getVideosByUserId(req.params.userId);
+//     res.status(200).json(videos);
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error fetching videos', error: error.message });
+//   }
+// };

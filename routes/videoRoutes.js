@@ -34,4 +34,9 @@ router.get('/:videoId/comments', commentController.getComments);
 router.put('/comments/:commentId', commentController.editComment); 
 router.delete('/comments/:commentId', commentController.deleteComment);
 
+////////////////////////////////////////////////////////////////////
+router.get('/user/:userId/videos', videoController.getVideosByUserId);
+///////////////////////////////////////////////////////////////////
+
+
 module.exports = router;
