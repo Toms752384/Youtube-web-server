@@ -53,9 +53,9 @@ userSchema.statics.fetchUser = async function(userId) {
 };
 
 //static function to delete a user from the list
-userSchema.statics.deleteUser = async function(username) {
+userSchema.statics.deleteUser = async function(userId) {
   try{
-      await this.deleteOne({username: username});
+      await this.findByIdAndDelete(userId);
   }
   catch(error){
     throw new Error('Error deleting user: ' + error.message);

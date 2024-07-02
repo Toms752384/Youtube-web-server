@@ -52,7 +52,7 @@ const getUser = async (req, res) => {
 //delete a user from the database function
 const deleteUser = async (req, res) => {
   try {
-    await User.deleteUser(req.body.username);
+    await User.deleteUser(req.params.id);
 
     //send response
     res.status(201).json({ message: 'User deleted successfully' });
