@@ -18,14 +18,18 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 * 1024 } // מגביל ל-5GB
 });
 
+//correct functions
 //function to fetch all the users
 router.get('/fetchUsers', usersController.fetchUsers);
+
+//function to get one user object
+router.get('/:id', usersController.getUser);
 
 //function to add a new user to the list
 router.post('/addUser', upload.single('avatar'), usersController.addNewUser);
 
 //function to log to a user from the list
-router.post('/login', usersController.login);
+// router.post('/login', usersController.login);
 
 //function to delete a user from the list
 router.post('/deleteUser', usersController.deleteUser);

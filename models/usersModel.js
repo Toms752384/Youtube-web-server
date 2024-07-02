@@ -42,9 +42,9 @@ userSchema.statics.createUser = async function (userData) {
 };
 
 //static function to fetch a user using its username
-userSchema.statics.fetchUser = async function(username) {
+userSchema.statics.fetchUser = async function(userId) {
   try {
-    const user = await this.find({username: username});
+    const user = await this.findById(userId);
     return user;
   }
   catch (error) {

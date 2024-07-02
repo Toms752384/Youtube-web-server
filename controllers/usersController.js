@@ -30,19 +30,19 @@ const addNewUser = async (req, res) => {
   }
 };
 
-//key to create a JWT
-const JWT_SECRET = 'secret_key';
+// //key to create a JWT
+// const JWT_SECRET = 'secret_key';
 
 //login to an existing user function
-const login = async (req, res) => {
+const getUser = async (req, res) => {
   try {
-    const loggedUser = await User.fetchUser(req.body.username);
+    const loggedUser = await User.fetchUser(req.params.id);
 
     //generate JWT for the user
-    const token = jwt.sign({ username: req.body.username }, JWT_SECRET, { expiresIn: '1h' });
+    // const token = jwt.sign({ username: req.body.username }, JWT_SECRET, { expiresIn: '1h' });
 
     //send response
-    res.status(201).json({ message: 'User logged successfully', loggedInUser: loggedUser[0], token: token });
+    res.status(201).json({ message: 'User logged successfully', loggedInUser: loggedUser });
   }
   catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -62,5 +62,5 @@ const deleteUser = async (req, res) => {
   }
 }
 
-module.exports = { fetchUsers, addNewUser, login, deleteUser };
+module.exports = { fetchUsers, addNewUser, getUser, deleteUser };
 

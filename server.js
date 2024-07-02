@@ -44,6 +44,7 @@ server.use('/users', userRoutes);
 //correct routes
 server.use('/api/users', videoRoutes);
 server.use('/api/videos', videoRoutes);
+server.use('/api/users', userRoutes);
 
 //define the port
 server.listen(port, () => {
