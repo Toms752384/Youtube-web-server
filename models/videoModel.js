@@ -57,7 +57,6 @@ videoSchema.statics.uploadVideo = async function (file, body) {
   try {
     const videoLink = `/localVideos/${file.filename}`;
     const videoData = {
-      // userId: body.userId,
       userId: body.userId,
       title: body.title,
       artist: body.artist || "title",
@@ -138,6 +137,16 @@ videoSchema.statics.getVideosByUserId = async function (userId) {
   }
 };
 ///////////////////////////////////////////////////
+
+// videoSchema.statics.getVideosByUserId = async function (userId) {
+//   try {
+//     const videos = await this.find({ userId: userId }).populate('userId', 'username nickname avatar');
+//     return videos;
+//   } catch (err) {
+//     throw new Error('Error fetching videos by user ID: ' + err.message);
+//   }
+// };
+
 
 const Video = mongoose.model('Video', videoSchema);
 module.exports = Video;
