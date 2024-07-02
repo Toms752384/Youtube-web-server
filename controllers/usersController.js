@@ -57,10 +57,24 @@ const deleteUser = async (req, res) => {
     //send response
     res.status(201).json({ message: 'User deleted successfully' });
   }
-  catch(error){
+  catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 }
 
-module.exports = { fetchUsers, addNewUser, getUser, deleteUser };
+//function to edit a video in the list
+const editUser = async (req, res) => {
+  try {
+    console.log(`Attempting to edit user with ID: ${req.params.id}`);
+    const user = await User.editUser(req.params.id, req.body);
+    if (!user) {
+      return res.status(404).json({ message: 'user not found' });
+    }
+    return res.status(200).json({ message: 'User edited successfully', user: user });
+  } catch (error) {
+    res.status(500).json({ message: 'Error editing video', error });
+  }
+};
+
+module.exports = { fetchUsers, addNewUser, getUser, deleteUser, editUser };
 

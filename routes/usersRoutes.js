@@ -22,7 +22,8 @@ const upload = multer({
 router.get('/fetchUsers', usersController.fetchUsers); //yeah
 router.get('/:id', usersController.getUser); //yey
 router.delete('/:id', usersController.deleteUser); //oved
-router.post('/', upload.single('avatar'), usersController.addNewUser); //livdok
+router.post('/', upload.single('avatar'), usersController.addNewUser); //oved
+router.put('/:id', usersController.editUser)
 
 //function to add a new user to the list
 router.post('/addUser', upload.single('avatar'), usersController.addNewUser);

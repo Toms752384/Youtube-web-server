@@ -62,5 +62,17 @@ userSchema.statics.deleteUser = async function(userId) {
   }
 }
 
+//static function to edit a user
+userSchema.statics.editUser = async function(userId, updateData) {
+  try {
+    const user = await this.findByIdAndUpdate(userId, { $set: updateData }, { new: true });
+    return user;
+
+  } catch (error) {
+    throw new Error('Error editing user: ' + error.message);
+  }
+}
+
 const User = mongoose.model('User', userSchema);
 module.exports = User;
+
