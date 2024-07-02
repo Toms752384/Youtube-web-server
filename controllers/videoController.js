@@ -80,3 +80,13 @@ exports.getVideosByUserId = async (req, res) => {
   }
 };
 ////////////////////////////////////////////////////////////////
+
+
+// exports.getVideosByUserId = async (req, res) => {
+//   try {
+//     const videos = await Video.getVideosByUserId(req.params.userId);
+//     res.status(200).json(videos);
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error fetching videos', error: error.message });
+//   }
+// };
