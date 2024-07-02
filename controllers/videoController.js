@@ -42,9 +42,9 @@ exports.getVideo = async (req, res) => {
 
 //function to delete video from the server
 exports.deleteVideo = async (req, res) => {
-  console.log(`Attempting to delete video with ID: ${req.params.id}`);
+  console.log(`Attempting to delete video with ID: ${req.params.pid}`);
   try {
-    const video = await Video.deleteVideo(req.params.id);
+    const video = await Video.deleteVideo(req.params.pid);
     console.log(video);
     if (!video) {
       return res.status(404).json({ message: 'Video not found' });

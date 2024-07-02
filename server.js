@@ -39,10 +39,11 @@ server.options('*', cors({
 
 //routes of server
 server.use('/users', userRoutes);
-server.use('/videos', videoRoutes);
+// server.use('/videos', videoRoutes);
 
 //correct routes
 server.use('/api/users', videoRoutes);
+server.use('/api/videos', videoRoutes);
 
 //define the port
 server.listen(port, () => {
