@@ -42,7 +42,7 @@ const login = async (req, res) => {
     const token = jwt.sign({ username: req.body.username }, JWT_SECRET, { expiresIn: '1h' });
 
     //send response
-    res.status(201).json({ message: 'User logged successfully', loggedUser, token: token });
+    res.status(201).json({ message: 'User logged successfully', loggedInUser: loggedUser[0], token: token });
   }
   catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
