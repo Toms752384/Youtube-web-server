@@ -62,17 +62,40 @@ const deleteUser = async (req, res) => {
   }
 }
 
-//function to edit a video in the list
+// const editUser = async (req, res) => {
+//   try {
+//     console.log(`Attempting to edit user with ID: ${req.params.id}`);
+//     const user = await User.editUser(req.params.id, req.body);
+//     if (!user) {
+//       return res.status(404).json({ message: 'user not found' });
+//     }
+//     return res.status(200).json({ message: 'User edited successfully', user: user });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error editing video', error });
+//   }
+// };
+
+//function to edit a user
 const editUser = async (req, res) => {
   try {
-    console.log(`Attempting to edit user with ID: ${req.params.id}`);
-    const user = await User.editUser(req.params.id, req.body);
-    if (!user) {
-      return res.status(404).json({ message: 'user not found' });
-    }
-    return res.status(200).json({ message: 'User edited successfully', user: user });
+      console.log(`Attempting to edit user with ID: ${req.params.id}`);
+      //create an object to send to the mdel function
+      const updateData = {
+          nickname: req.body.nickname,
+      };
+      //if a photo was added, add to the object
+      if (req.file) {
+          const imgBase64 = req.file.buffer.toString('base64');
+          updateData.avatar = `data:${req.file.mimetype};base64,${imgBase64}`;
+        }
+
+      const user = await User.editUser(req.params.id, updateData);
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+      return res.status(200).json({ message: 'User edited successfully', user: user });
   } catch (error) {
-    res.status(500).json({ message: 'Error editing video', error });
+      res.status(500).json({ message: 'Error editing user', error });
   }
 };
 
