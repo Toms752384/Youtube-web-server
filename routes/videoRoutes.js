@@ -21,12 +21,15 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 * 1024 }
 });
 
+//correct paths for videos
+router.get('/:id/videos', videoController.getVideosByUserId); //debug!! 
+
 //paths for videos
 router.post('/upload', upload.single('video'), videoController.uploadVideo);
 router.get('/fetchVideos', videoController.getVideos); 
 router.get('/fetchVideo/:id', videoController.getVideo);
-router.delete('/:id', videoController.deleteVideo); //change route to be deleteVideo/:id
-router.put('/:id', videoController.editVideo); //change route to be editVideo/:id
+router.delete('/:id', videoController.deleteVideo); 
+router.put('/:id', videoController.editVideo); 
 
 //paths for comments in videos
 router.post('/:videoId/addComment', commentController.addComment);
@@ -35,7 +38,7 @@ router.put('/comments/:commentId', commentController.editComment);
 router.delete('/comments/:commentId', commentController.deleteComment);
 
 ////////////////////////////////////////////////////////////////////
-router.get('/user/:userId/videos', videoController.getVideosByUserId);
+// router.get('/user/:userId/videos', videoController.getVideosByUserId);
 ///////////////////////////////////////////////////////////////////
 
 

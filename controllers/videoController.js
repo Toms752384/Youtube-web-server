@@ -72,7 +72,7 @@ exports.editVideo = async (req, res) => {
 ////////////////////////////////////////////////////////////////
 exports.getVideosByUserId = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.params.id;
     const videos = await Video.getVideosByUserId(userId);
     res.status(200).json({ message: 'Videos fetched successfully', videos : videos });
   } catch (error) {

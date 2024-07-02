@@ -41,6 +41,9 @@ server.options('*', cors({
 server.use('/users', userRoutes);
 server.use('/videos', videoRoutes);
 
+//correct routes
+server.use('/api/users', videoRoutes);
+
 //define the port
 server.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
