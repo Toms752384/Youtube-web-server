@@ -12,8 +12,8 @@ For the bodek:
  after this you will be able to see in your own mongoDB -
  - 3 users
  -  20 videos
- -  
-   it might take a few moments
+    
+ it might take a few moments
 
 This is to make it easier for you to check the assignment 💘
 
