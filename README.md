@@ -23,7 +23,7 @@ This is to make it easier for you to check the assignment 💘
 
 Our paths ( accoreding to what the assigment ask for ) - 
 
----------------------------------------------------------------------------users_path-----------------------------------------------------------------------------------
+------------------------------------------------------------------users_path--------------------------------------------------------------------------------
 
 * to get the user details - (name,profile..) - get request
   http://localhost:3000/api/users/:id
@@ -39,7 +39,7 @@ Our paths ( accoreding to what the assigment ask for ) -
 
    - please notice you can delete your own user if you are Connected.
      
---------------------------------------------------------------------------videos_path-----------------------------------------------------------------------------------
+-----------------------------------------------------------------videos_path-------------------------------------------------------------------------------
 
  * to get 20 videos with -get- that the first 10 videos are most viewed and the other 10 are randomly -
   http://localhost:3000/api/videos
@@ -72,7 +72,7 @@ Our paths ( accoreding to what the assigment ask for ) -
       - notice you can delete a video only if it is your video and you logged in 💻,
       to delete click on the 3 dots below the video in the page of watch a video.
 
------------------------------------------------------------------------------comments_path------------------------------------------------------------------------------
+--------------------------------------------------------------------comments_path---------------------------------------------------------------------------
 
    * to add a new comment - post request
      http://localhost:3000/api/users/:pid/comments/:id
