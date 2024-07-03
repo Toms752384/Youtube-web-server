@@ -23,7 +23,7 @@ This is to make it easier for you to check the assignment 💘
    
 4. Enjoy!
 
-Our paths ( accoreding to what the assigment ask for ) - 
+Our paths ( accoreding to what the assigment ask for and more ) - 
 
 ------------------------------------------------------------------users_path--------------------------------------------------------------------------------
 
@@ -40,17 +40,26 @@ Our paths ( accoreding to what the assigment ask for ) -
    http://localhost:3000/api/users/:id
 
    - please notice you can delete your own user if you are Connected.
+  
+ * to get all users - get request
+   http://localhost:3000/api/users/fetchUsers
+
+ * to create a new user - post request
+   http://localhost:3000/api/users/
      
 -----------------------------------------------------------------videos_path-------------------------------------------------------------------------------
 
  * to get 20 videos with -get- that the first 10 videos are most viewed and the other 10 are randomly -
   http://localhost:3000/api/videos
 
+   - relevnt to the Home page , notice that you will see allways 20 videos in the home page even if there are more in the mongoDB
+     because that is the requirement of the assignment
+
  * to return the all videos that a of a user with a specific id - get request
    http://localhost:3000/api/users/:id/videos
 
-   - it is useful for the profile page the assigment asked for , you can get to this by click on a video and there click on the photo of the user that uploud this video ( 
-     the photo is below the video.
+   - it is useful for the profile page the assigment asked for , you can get to this by click on a video and there click on the photo of the user / his username next to the 
+     photo that uploud this video ,the photo is below the video.
      
   * to create a new video - post request
     http://localhost:3000/api/users/:id/videos
