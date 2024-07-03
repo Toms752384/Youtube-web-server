@@ -23,15 +23,15 @@ router.get('/fetchUsers', usersController.fetchUsers); //yeah
 router.get('/:id', usersController.getUser); //yey
 router.delete('/:id', usersController.deleteUser); //oved
 router.post('/', upload.single('avatar'), usersController.addNewUser); //oved
-router.put('/:id', upload.single('avatar'), usersController.editUser)
+router.put('/:id', upload.single('avatar'), usersController.editUser) //oved
 
 //function to add a new user to the list
-router.post('/addUser', upload.single('avatar'), usersController.addNewUser);
+// router.post('/addUser', upload.single('avatar'), usersController.addNewUser);
 
 //function to log to a user from the list
 // router.post('/login', usersController.login);
 
 //function to delete a user from the list
-router.post('/deleteUser', usersController.deleteUser);
+// router.post('/deleteUser', usersController.deleteUser);
 
 module.exports = router;
