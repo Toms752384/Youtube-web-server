@@ -6,6 +6,11 @@ const path = require('path');
 
 // the schema for a collection video
 const videoSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
   title: {
     type: String,
     required: true
@@ -13,9 +18,6 @@ const videoSchema = new mongoose.Schema({
   artist: { //fix this in order to connet with thie artist user
     type: String,
     required: true
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: 'User',
-    // required: true
   },
   views: {
     type: Number,
@@ -55,6 +57,7 @@ videoSchema.statics.uploadVideo = async function (file, body) {
   try {
     const videoLink = `/localVideos/${file.filename}`;
     const videoData = {
+      userId: body.userId,
       title: body.title,
       artist: body.artist || "title",
       views: body.views || 0,
@@ -122,6 +125,28 @@ videoSchema.statics.editVideo = async function (videoId, updateData) {
     throw new Error('Error editing video: ' + err.message);
   }
 };
+
+
+/////////////////////////////////////////////////
+videoSchema.statics.getVideosByUserId = async function (userId) {
+  try {
+    const videos = await this.find({ userId: userId });
+    return videos;
+  } catch (err) {
+    throw new Error('Error fetching videos by user ID: ' + err.message);
+  }
+};
+///////////////////////////////////////////////////
+
+// videoSchema.statics.getVideosByUserId = async function (userId) {
+//   try {
+//     const videos = await this.find({ userId: userId }).populate('userId', 'username nickname avatar');
+//     return videos;
+//   } catch (err) {
+//     throw new Error('Error fetching videos by user ID: ' + err.message);
+//   }
+// };
+
 
 const Video = mongoose.model('Video', videoSchema);
 module.exports = Video;
