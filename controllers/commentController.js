@@ -62,7 +62,7 @@ exports.addComment = async (req, res) => {
 exports.getComments = async (req, res) => {
   try {
     // get the id from the path
-    const { videoId } = req.params.pid;
+    const  videoId  = req.params.pid;
 
     // GET
     const comments = await Comment.getCommentsByVideoId(videoId);
