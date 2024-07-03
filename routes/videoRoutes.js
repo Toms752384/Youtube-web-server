@@ -29,19 +29,6 @@ router.put('/:id/videos/:pid', videoController.editVideo); //yey
 router.delete('/:id/videos/:pid', videoController.deleteVideo); //nice
 router.get('/', videoController.getVideos); //oved
 
-//paths for videos
-// router.post('/upload/', upload.single('video'), videoController.uploadVideo);
-// router.get('/fetchVideos', videoController.getVideos); 
-// router.get('/fetchVideo/:id', videoController.getVideo);
-// router.delete('/:id', videoController.deleteVideo); 
-// router.put('/:id', videoController.editVideo); 
-
-//paths for comments in videos
-// router.post('/:videoId/addComment', commentController.addComment);
-// router.get('/:videoId/comments', commentController.getComments);
-// router.put('/comments/:commentId', commentController.editComment); 
-// router.delete('/comments/:commentId', commentController.deleteComment);
-
 //////////////////////////////// new for comments  -------------------- לבדוק עכשיו
 // # add coment #
 router.post('/:pid/comments/:id', commentController.addComment); //oved
