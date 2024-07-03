@@ -22,9 +22,7 @@ This is to make it easier for you to check the assignment 💘
 4. Enjoy!
 
 Our paths ( accoreding to what the assigment ask for ) - 
-* to get 20 videos with -get- that the first 10 videos are most viewed and the other 10 are randomly -
-  http://localhost:3000/api/videos 
-
+---------------------------------------------------------------------------------users_path-----------------------------------------------------------------------------------
 * to get the user details - (name,profile..) - get request
   http://localhost:3000/api/users/:id
   
@@ -38,8 +36,11 @@ Our paths ( accoreding to what the assigment ask for ) -
    http://localhost:3000/api/users/:id
 
    - please notice you can delete your own user if you are Connected.
+--------------------------------------------------------------------------------videos_path-----------------------------------------------------------------------------------
+ * to get 20 videos with -get- that the first 10 videos are most viewed and the other 10 are randomly -
+  http://localhost:3000/api/videos
 
- * to return the all videos that a of a user with a Spitzfit id - get request
+ * to return the all videos that a of a user with a specific id - get request
    http://localhost:3000/api/users/:id/videos
 
    - it is useful for the profile page the assigment asked for , you can get to this by click on a video and there click on the photo of the user that uploud this video ( 
@@ -66,9 +67,13 @@ Our paths ( accoreding to what the assigment ask for ) -
 
       - notice you can delete a video only if it is your video and you logged in 💻,
       to delete click on the 3 dots below the video in the page of watch a video.
-
+-----------------------------------------------------------------------------------comments_path------------------------------------------------------------------------------
    * to add a new comment - post request
      http://localhost:3000/api/users/:pid/comments/:id
+
+     - notice to add a comment you need to get to a video you want to share a comment there and you will see below the video commentbox 💬
+
+   * to get all comments by id of video - get request
 
   
 
