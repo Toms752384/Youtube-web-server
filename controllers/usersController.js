@@ -14,7 +14,7 @@ const fetchUsers = async (req, res) => {
   }
 };
 
-//add a new user function
+// add a new user function
 const addNewUser = async (req, res) => {
   if (req.file) {
     // Assuming you want to convert the image to a base64 string
@@ -30,24 +30,30 @@ const addNewUser = async (req, res) => {
   }
 };
 
-// //key to create a JWT
-// const JWT_SECRET = 'secret_key';
+
+const createToken = async (req, res) => {
+  try {
+    // jwt.sign - give to the token a token
+    const token = jwt.sign({ userId: req.body.userId }, 'our_secret_maayan_tom_alon_2002!<3', { expiresIn: '30d' });
+    res.status(200).json({ message : "token created successfully" , token  : token });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  } 
+};
+
 
 //login to an existing user function
 const getUser = async (req, res) => {
   try {
     const loggedUser = await User.fetchUser(req.params.id);
-
-    //generate JWT for the user
-    // const token = jwt.sign({ username: req.body.username }, JWT_SECRET, { expiresIn: '1h' });
-
     //send response
-    res.status(201).json({ message: 'User logged successfully', loggedInUser: loggedUser });
+    res.status(201).json({ message: 'User logged successfully', loggedInUser: loggedUser});
   }
   catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
+
 
 //delete a user from the database function
 const deleteUser = async (req, res) => {
@@ -62,18 +68,7 @@ const deleteUser = async (req, res) => {
   }
 }
 
-// const editUser = async (req, res) => {
-//   try {
-//     console.log(`Attempting to edit user with ID: ${req.params.id}`);
-//     const user = await User.editUser(req.params.id, req.body);
-//     if (!user) {
-//       return res.status(404).json({ message: 'user not found' });
-//     }
-//     return res.status(200).json({ message: 'User edited successfully', user: user });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error editing video', error });
-//   }
-// };
+
 
 //function to edit a user
 const editUser = async (req, res) => {
@@ -99,5 +94,5 @@ const editUser = async (req, res) => {
   }
 };
 
-module.exports = { fetchUsers, addNewUser, getUser, deleteUser, editUser };
+module.exports = { fetchUsers, addNewUser, getUser, deleteUser, editUser, createToken };
 

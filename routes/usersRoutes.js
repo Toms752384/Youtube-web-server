@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/usersController');
+//////////////////////////////////////////////////
+const { authenticateToken } = require('../routes/tokenRoutes');
+///////////////////////////////////////////////////
+
 
 // for avatar of user
 const multer = require('multer');
@@ -21,17 +25,9 @@ const upload = multer({
 //correct functions
 router.get('/fetchUsers', usersController.fetchUsers); //yeah
 router.get('/:id', usersController.getUser); //yey
-router.delete('/:id', usersController.deleteUser); //oved
+router.delete('/:id',authenticateToken , usersController.deleteUser); //oved
 router.post('/', upload.single('avatar'), usersController.addNewUser); //oved
-router.put('/:id', upload.single('avatar'), usersController.editUser) //oved
+router.put('/:id', upload.single('avatar'), authenticateToken , usersController.editUser) //oved
 
-//function to add a new user to the list
-// router.post('/addUser', upload.single('avatar'), usersController.addNewUser);
-
-//function to log to a user from the list
-// router.post('/login', usersController.login);
-
-//function to delete a user from the list
-// router.post('/deleteUser', usersController.deleteUser);
 
 module.exports = router;
