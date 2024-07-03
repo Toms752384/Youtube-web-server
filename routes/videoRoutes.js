@@ -46,7 +46,7 @@ router.get('/', videoController.getVideos); //oved
 // # add coment #
 router.post('/:id/comments/:cid', commentController.addComment); 
 // # get all comments by id of a video #
-router.get('/:id/comments/:cid', commentController.getComments);
+router.get('/:pid/comments', commentController.getComments); //
 // # edit a comment #
 router.put('/:id/comments/:cid', commentController.editComment); 
 // # delete a comment #

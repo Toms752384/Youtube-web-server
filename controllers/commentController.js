@@ -32,14 +32,14 @@ exports.addComment = async (req, res) => {
 exports.getComments = async (req, res) => {
   try {
     // get the id from the path
-    const { videoId } = req.params;
+    const { videoId } = req.params.pid;
 
     // GET
     const comments = await Comment.getCommentsByVideoId(videoId);
 
-    res.status(200).json({ success: true, comments });
+    res.status(200).json({ message: 'Comments fetched successfully', comments: comments });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ message: 'Error fetching Comments', error });
   }
 };
 
