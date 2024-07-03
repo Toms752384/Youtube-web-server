@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/usersRoutes');
 const videoRoutes = require('./routes/videoRoutes');
+const tokenRoutes = require('./routes/tokenRoutes');
 const multer = require('multer');
 
 //prolog
@@ -46,7 +47,7 @@ server.use('/api/users', videoRoutes);
 server.use('/api/videos', videoRoutes);
 server.use('/api/users', userRoutes);
 // path to token post
-server.use('/api/tokens',userRoutes);
+server.use('/api/tokens',tokenRoutes);
 
 //define the port
 server.listen(port, () => {

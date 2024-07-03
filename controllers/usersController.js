@@ -94,5 +94,5 @@ const editUser = async (req, res) => {
   }
 };
 
-module.exports = { fetchUsers, addNewUser, getUser, deleteUser, editUser };
+module.exports = { fetchUsers, addNewUser, getUser, deleteUser, editUser, createToken };
 
