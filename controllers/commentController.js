@@ -89,7 +89,9 @@ exports.editComment = async (req, res) => {
 // delete a comment
 exports.deleteComment = async (req, res) => {
   try {
-    const { commentId } = req.params;
+    const commentId = req.params.cid;
+    const videoId = req.params.pid;
+    const userId = req.params.id;
     
     const deletedComment = await Comment.deleteCommentById(commentId);
     if (!deletedComment) {
@@ -99,8 +101,8 @@ exports.deleteComment = async (req, res) => {
     // update the video that one comment is deleted it will take it dowm
     await Video.findByIdAndUpdate(deletedComment.video, { $pull: { comments: commentId } });
 
-    res.status(200).json({ success: true, message: 'Comment deleted successfully' });
+    res.status(200).json({ message: 'Comment deleted successfully'});
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ message: 'Error delete Comment', error });
   }
 };
