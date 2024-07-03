@@ -15,17 +15,21 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 * 1024 } // מגביל ל-5GB
+  limits: { fileSize: 5 * 1024 * 1024 * 1024 } //5MB limit
 });
 
-//function to fetch all the users
-router.get('/fetchUsers', usersController.fetchUsers);
+//correct functions
+router.get('/fetchUsers', usersController.fetchUsers); //yeah
+router.get('/:id', usersController.getUser); //yey
+router.delete('/:id', usersController.deleteUser); //oved
+router.post('/', upload.single('avatar'), usersController.addNewUser); //oved
+router.put('/:id', upload.single('avatar'), usersController.editUser)
 
 //function to add a new user to the list
 router.post('/addUser', upload.single('avatar'), usersController.addNewUser);
 
 //function to log to a user from the list
-router.post('/login', usersController.login);
+// router.post('/login', usersController.login);
 
 //function to delete a user from the list
 router.post('/deleteUser', usersController.deleteUser);

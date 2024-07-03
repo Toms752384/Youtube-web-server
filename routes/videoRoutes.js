@@ -21,12 +21,20 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 * 1024 }
 });
 
+//correct paths for videos
+router.get('/:id/videos', videoController.getVideosByUserId); //oved noder
+router.post('/:id/videos', upload.single('video'), videoController.uploadVideo); //noder neder
+router.get('/:id/videos/:pid', videoController.getVideo); //metoraf
+router.put('/:id/videos/:pid', videoController.editVideo); //yey
+router.delete('/:id/videos/:pid', videoController.deleteVideo); //nice
+router.get('/', videoController.getVideos); //oved
+
 //paths for videos
-router.post('/upload', upload.single('video'), videoController.uploadVideo);
-router.get('/fetchVideos', videoController.getVideos); 
-router.get('/fetchVideo/:id', videoController.getVideo);
-router.delete('/:id', videoController.deleteVideo); //change route to be deleteVideo/:id
-router.put('/:id', videoController.editVideo); //change route to be editVideo/:id
+// router.post('/upload/', upload.single('video'), videoController.uploadVideo);
+// router.get('/fetchVideos', videoController.getVideos); 
+// router.get('/fetchVideo/:id', videoController.getVideo);
+// router.delete('/:id', videoController.deleteVideo); 
+// router.put('/:id', videoController.editVideo); 
 
 //paths for comments in videos
 // router.post('/:videoId/addComment', commentController.addComment);
@@ -46,7 +54,7 @@ router.delete('/:id/comments/:cid', commentController.deleteComment);
 
 
 ////////////////////////////////////////////////////////////////////
-router.get('/user/:userId/videos', videoController.getVideosByUserId);
+// router.get('/user/:userId/videos', videoController.getVideosByUserId);
 ///////////////////////////////////////////////////////////////////
 
 

@@ -28,8 +28,8 @@ exports.getVideos = async (req, res) => {
 //function to get a video
 exports.getVideo = async (req, res) => {
   try{
-    console.log(`Attempting to fetch video with ID: ${req.params.id}`);
-    const video = await Video.getVideo(req.params.id);
+    console.log(`Attempting to fetch video with ID: ${req.params.pid}`);
+    const video = await Video.getVideo(req.params.pid);
     if (!video) {
       return res.status(404).json({ message: 'Video not found' });
     }
@@ -42,9 +42,9 @@ exports.getVideo = async (req, res) => {
 
 //function to delete video from the server
 exports.deleteVideo = async (req, res) => {
-  console.log(`Attempting to delete video with ID: ${req.params.id}`);
+  console.log(`Attempting to delete video with ID: ${req.params.pid}`);
   try {
-    const video = await Video.deleteVideo(req.params.id);
+    const video = await Video.deleteVideo(req.params.pid);
     console.log(video);
     if (!video) {
       return res.status(404).json({ message: 'Video not found' });
@@ -58,8 +58,8 @@ exports.deleteVideo = async (req, res) => {
 //function to edit a video in the list
 exports.editVideo = async (req, res) => {
   try {
-    console.log(`Attempting to edit video with ID: ${req.params.id}`);
-    const video = await Video.editVideo(req.params.id, req.body);
+    console.log(`Attempting to edit video with ID: ${req.params.pid}`);
+    const video = await Video.editVideo(req.params.pid, req.body);
     if (!video) {
       return res.status(404).json({ message: 'Video not found' });
     }
@@ -72,7 +72,7 @@ exports.editVideo = async (req, res) => {
 ////////////////////////////////////////////////////////////////
 exports.getVideosByUserId = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.params.id;
     const videos = await Video.getVideosByUserId(userId);
     res.status(200).json({ message: 'Videos fetched successfully', videos : videos });
   } catch (error) {
