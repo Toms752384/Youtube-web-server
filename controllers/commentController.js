@@ -64,6 +64,7 @@ exports.getComments = async (req, res) => {
     // get the id from the path
     const  videoId  = req.params.pid;
 
+
     // GET
     const comments = await Comment.getCommentsByVideoId(videoId);
 
@@ -76,13 +77,16 @@ exports.getComments = async (req, res) => {
 // edit a comment
 exports.editComment = async (req, res) => {
   try {
-    const { commentId } = req.params;
-    const { content } = req.body;
+    const commentId = req.params.cid;
+    const videoId = req.params.pid;
+    const userId = req.params.id;
+
+    const {content} = req.body;
     
     const updatedComment = await Comment.editCommentById(commentId, content);
-    res.status(200).json({ success: true, comment: updatedComment });
+    res.status(200).json({ message: 'Comment edited successfully', updatedComment: updatedComment });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ message: 'Error editing Comment', error });
   }
 };
 

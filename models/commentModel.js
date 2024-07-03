@@ -73,7 +73,6 @@ commentSchema.statics.editCommentById = async function(commentId, content) {
   }
 };
 
-
 module.exports = mongoose.model('Comment', commentSchema);
 
 // ------- user
