@@ -45,6 +45,8 @@ server.use('/users', userRoutes);
 server.use('/api/users', videoRoutes);
 server.use('/api/videos', videoRoutes);
 server.use('/api/users', userRoutes);
+// path to token post
+server.use('/api/tokens',userRoutes);
 
 //define the port
 server.listen(port, () => {
