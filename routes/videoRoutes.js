@@ -44,9 +44,9 @@ router.get('/', videoController.getVideos); //oved
 
 //////////////////////////////// new for comments  -------------------- לבדוק עכשיו
 // # add coment #
-router.post('/:id/comments/:cid', commentController.addComment); 
+router.post('/:pid/comments/:id', commentController.addComment); //livdok
 // # get all comments by id of a video #
-router.get('/:pid/comments', commentController.getComments); //
+router.get('/:pid/comments', commentController.getComments); //oved noder
 // # edit a comment #
 router.put('/:id/comments/:cid', commentController.editComment); 
 // # delete a comment #
