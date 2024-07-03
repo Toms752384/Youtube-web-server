@@ -1,7 +1,9 @@
 # Youtube-web-server
 Web server for youtube project
 
-For the bodek:
+repo link - 
+
+For the bodek - General description of running the code:
 1. Run "npm i" to install the dependencies of the server.
 
  2.Before running the server with nodemon, please write the followoing command in your terminal:
