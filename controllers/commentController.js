@@ -8,8 +8,19 @@ exports.addComment = async (req, res) => {
     const { videoId } = req.params;
     // get the comment it self
     const { content } = req.body;
+    ////////////////////////////////////////////////////
+    if (req.file) {
+      // Assuming you want to convert the image to a base64 string
+      const imgBase64 = req.file.buffer.toString('base64');
+      req.body.avatar = imgBase64; // append image in base64 to req.body
+    }
+    const { avatar } = req.body;
+    const { userId } = req.body;
+    const { username } = req.body;
+    //////////////////////////////////////////////////////////////
+
     // add it
-    const comment = await Comment.addComment(videoId, content);
+    const comment = await Comment.addComment(videoId, content, avatar , username, userId);
 
     res.status(201).json({ success: true, comment });
   } catch (error) {
