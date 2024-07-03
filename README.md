@@ -104,5 +104,7 @@ Our paths ( accoreding to what the assigment ask for ) -
 
      - This is in order for us to create a token for the user and now all actions ןמ the server will attach this token
 
-  
+  באחריותכם לוודא ש״נעלתם״ את קוד השרת שאתם מגישים לתרגיל 2 ב branch מתאים,
+שהבודק יוכל לבדוק אותו - וכדי שלא תתערבב העבודה על תרגיל 3 עם מה שהוגש בתרגיל .2
+עליכם להסביר זאת בצורה ברורה ב README. לבדוק
 
