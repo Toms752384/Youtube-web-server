@@ -16,12 +16,28 @@ This is to make it easier for you to check the assignment 💘
 3. Run the server using "nodemon server.js".
 4. Enjoy!
 
-Our path ( accoreding to what the assigment ask for ) - 
- # to get 20 videos with -get- that the first 10 videos are most viewed and the other 10 are randomly -
- http://localhost/3000/videos
+Our paths ( accoreding to what the assigment ask for ) - 
+* to get 20 videos with -get- that the first 10 videos are most viewed and the other 10 are randomly -
+  http://localhost:3000/api/videos 
 
- # to get the user details - (name,profile..)
-  http://localhost/3000/users/:id
+* to get the user details - (name,profile..) - get request
+  http://localhost:3000/api/users/:id
+  
+* to edit a User exist - put request
+  http://localhost:3000/api/users/:id
 
-  #
+  - please notice if you want to edit you can open the menu ( in the side of evey page - on icon 3 stripes one below the other) and click next to "Edit your profile" on 
+    "Edit" it will open for you the option to change your nickname or photo profile depending on what you choose.
+    
+ * to delete a user - deledt request
+   http://localhost:3000/api/users/:id
+
+   - please notice you can delete your own user if you are Connected.
+
+ * to return the all videos that a of a user with a Spitzfit id - get request
+   http://localhost:3000/api/users/:id/videos
+
+   - it is useful for the profile page the assigment asked for , you can get to this 
+
+  
 
