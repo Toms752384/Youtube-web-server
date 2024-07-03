@@ -44,13 +44,13 @@ router.get('/', videoController.getVideos); //oved
 
 //////////////////////////////// new for comments  -------------------- לבדוק עכשיו
 // # add coment #
-router.post('/:id/comments/:cid', commentController.addComment); 
+router.post('/:pid/comments/:id', commentController.addComment); //oved
 // # get all comments by id of a video #
-router.get('/:id/comments/:cid', commentController.getComments);
+router.get('/:pid/comments', commentController.getComments); //oved noder
 // # edit a comment #
-router.put('/:id/comments/:cid', commentController.editComment); 
+router.put('/:id/:pid/comments/:cid', commentController.editComment); 
 // # delete a comment #
-router.delete('/:id/comments/:cid', commentController.deleteComment);
+router.delete('/:id/:pid/comments/:cid', commentController.deleteComment); //oved
 
 
 ////////////////////////////////////////////////////////////////////
