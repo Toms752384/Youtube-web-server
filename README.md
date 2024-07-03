@@ -86,15 +86,23 @@ Our paths ( accoreding to what the assigment ask for ) -
     
 
    * to edit a comment - put request
-     http://localhost:3000/api/users//:id/:pid/comments/:cid
+     http://localhost:3000/api/users/:id/:pid/comments/:cid
 
      - notice you can edit a comment by getting to a video you wrote a commend there and below your comment there are 3 dots if you will click it you can choose the option 
        to edit your comment 🖱️
 
    * to delete a comment - delete request
-      http://localhost:3000/api/users//:id/:pid/comments/:cid
+      http://localhost:3000/api/users/:id/:pid/comments/:cid
      
      - notice you can delete a comment by getting to a video you wrote a commend there and below your comment there are 3 dots if you will click it you can choose the 
        option to delete your comment 🖱️
+
+       -----------------------------------------------------------------token_path-------------------------------------------------------------------------------
+
+   * to create a token to a user that exist - post request
+     http://localhost:3000/api/tokens
+
+     - This is in order for us to create a token for the user and now all actions ןמ the server will attach this token
+
   
 
