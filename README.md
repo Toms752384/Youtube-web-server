@@ -4,12 +4,12 @@ Web server for youtube project
 For the bodek:
 1. Run "npm i" to install the dependencies of the server.
 
-2.Before running the server with nodemon, please write the followoing command in your terminal:
-"node uploadExistingVideos.js"
-This will upload the videos from the server to your local mongodb database.
-Now you have our 20 defualt videos.
-This will also uploud you 3 users ( us - Alon, Tom , Maayan (: )
-after this you will be able to see in your own mongoDB -
+ 2.Before running the server with nodemon, please write the followoing command in your terminal:
+ "node uploadExistingVideos.js"
+ This will upload the videos from the server to your local mongodb database.
+ Now you have our 20 defualt videos.
+ This will also uploud you 3 users ( us - Alon, Tom , Maayan (: )
+ after this you will be able to see in your own mongoDB -
 1 - 3 users
 2-  20 videos
    it might take a few moments 
