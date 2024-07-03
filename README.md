@@ -1,7 +1,7 @@
 # Youtube-web-server
 Web server for youtube project
 
-repo link - 
+repo link - https://github.com/Toms752384/Youtube-web-server.git
 
 For the bodek - General description of running the code:
 1. Run "npm i" to install the dependencies of the server.
@@ -9,11 +9,11 @@ For the bodek - General description of running the code:
  2.Before running the server with nodemon, please write the followoing command in your terminal:
  "node uploadExistingVideos.js"
  This will upload the videos from the server to your local mongodb database.
- Now you have our 20 defualt videos.
- This will also uploud you 3 users ( us - Alon, Tom , Maayan (: )
+ Now you have our 20 defualt videos 🫶.
+ This will also uploud you 3 users ( us - Alon, Tom , Maayan 💖 )
  after this you will be able to see in your own mongoDB -
  - 3 users
- -  20 videos
+ - 20 videos
     
  it might take a few moments
 
