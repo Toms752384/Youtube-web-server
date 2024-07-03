@@ -29,10 +29,21 @@ router.delete('/:id', videoController.deleteVideo); //change route to be deleteV
 router.put('/:id', videoController.editVideo); //change route to be editVideo/:id
 
 //paths for comments in videos
-router.post('/:videoId/addComment', commentController.addComment);
-router.get('/:videoId/comments', commentController.getComments);
-router.put('/comments/:commentId', commentController.editComment); 
-router.delete('/comments/:commentId', commentController.deleteComment);
+// router.post('/:videoId/addComment', commentController.addComment);
+// router.get('/:videoId/comments', commentController.getComments);
+// router.put('/comments/:commentId', commentController.editComment); 
+// router.delete('/comments/:commentId', commentController.deleteComment);
+
+//////////////////////////////// new for comments  -------------------- לבדוק עכשיו
+// # add coment #
+router.post('/:id/comments/:cid', commentController.addComment); 
+// # get all comments by id of a video #
+router.get('/:id/comments/:cid', commentController.getComments);
+// # edit a comment #
+router.put('/:id/comments/:cid', commentController.editComment); 
+// # delete a comment #
+router.delete('/:id/comments/:cid', commentController.deleteComment);
+
 
 ////////////////////////////////////////////////////////////////////
 router.get('/user/:userId/videos', videoController.getVideosByUserId);

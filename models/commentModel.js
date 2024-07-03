@@ -6,11 +6,18 @@ const commentSchema = new mongoose.Schema({
       ref: 'Video',
       required: true 
     },
-  // user: {
-  //    type: mongoose.Schema.Types.ObjectId,
-  //    ref: 'User', 
-  //    required: true 
-  //   },
+  userId: {
+     type: mongoose.Schema.Types.ObjectId,
+     ref: 'User', 
+     required: true 
+    },
+  username : {
+    type : String,
+    required : true
+  },
+  avatar : {
+    type : String
+  },
   content: { 
     type: String, 
     required: true 
@@ -18,10 +25,10 @@ const commentSchema = new mongoose.Schema({
 });
 
 // a static func to add comment
-commentSchema.statics.addComment = async function(videoId, content) {
+commentSchema.statics.addComment = async function(videoId, content, avatar , username, userId) {
   try {
     // get all the data u need
-    const comment = new this({ video: videoId, content });
+    const comment = new this({ video: videoId, content : content, avatar : avatar, user : username , user : userId });
     await comment.save();
     
     // update the correct video to *include* the comments that belong to him
