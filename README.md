@@ -97,7 +97,7 @@ Our paths ( accoreding to what the assigment ask for ) -
      - notice you can delete a comment by getting to a video you wrote a commend there and below your comment there are 3 dots if you will click it you can choose the 
        option to delete your comment 🖱️
 
-       -----------------------------------------------------------------token_path-------------------------------------------------------------------------------
+     -----------------------------------------------------------------token_path-------------------------------------------------------------------------
 
    * to create a token to a user that exist - post request
      http://localhost:3000/api/tokens
