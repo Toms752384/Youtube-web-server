@@ -72,7 +72,7 @@ Our paths ( accoreding to what the assigment ask for ) -
       - notice you can delete a video only if it is your video and you logged in 💻,
       to delete click on the 3 dots below the video in the page of watch a video.
 
---------------------------------------------------------------------comments_path---------------------------------------------------------------------------
+----------------------------------------------------------------comments_path---------------------------------------------------------------------------
 
    * to add a new comment - post request
      http://localhost:3000/api/users/:pid/comments/:id
@@ -80,6 +80,21 @@ Our paths ( accoreding to what the assigment ask for ) -
      - notice to add a comment you need to get to a video you want to share a comment there and you will see below the video commentbox 💬
 
    * to get all comments by id of video - get request
+     http://localhost:3000/api/users/:pid/comments
 
+     - it is usefull for the watching a video page
+    
+
+   * to edit a comment - put request
+     http://localhost:3000/api/users//:id/:pid/comments/:cid
+
+     - notice you can edit a comment by getting to a video you wrote a commend there and below your comment there are 3 dots if you will click it you can choose the option 
+       to edit your comment 🖱️
+
+   * to delete a comment - delete request
+      http://localhost:3000/api/users//:id/:pid/comments/:cid
+     
+     - notice you can delete a comment by getting to a video you wrote a commend there and below your comment there are 3 dots if you will click it you can choose the 
+       option to delete your comment 🖱️
   
 
