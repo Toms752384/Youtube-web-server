@@ -37,7 +37,33 @@ Our paths ( accoreding to what the assigment ask for ) -
  * to return the all videos that a of a user with a Spitzfit id - get request
    http://localhost:3000/api/users/:id/videos
 
-   - it is useful for the profile page the assigment asked for , you can get to this 
+   - it is useful for the profile page the assigment asked for , you can get to this by click on a video and there click on the photo of the user that uploud this video ( 
+     the photo is below the video.
+     
+  * to create a new video - post request
+    http://localhost:3000/api/users/:id/videos
+
+    - you can uploud a new video by clicking on the menu bar or the the icon of camera (🎥) that in the right corner.
+
+  * to get a details on a spcific id video - get requst
+    http://localhost:3000/api/users/:id/videos/:pid
+
+    - just choose from the home page which video you will like to watch 😃
+
+  * to edit a exist video - put requst
+    http://localhost:3000/api/users/:id/videos/:pid
+
+    - notice you can edit a video only if it is your video and you logged in 💻,
+      to edit click on the 3 dots below the video in the page of watch a video.
+
+   * to delete a exist video - delete requset
+     http://localhost:3000/api/users/:id/videos/:pid
+
+      - notice you can delete a video only if it is your video and you logged in 💻,
+      to delete click on the 3 dots below the video in the page of watch a video.
+
+   * to add a new comment - post request
+     http://localhost:3000/api/users/:pid/comments/:id
 
   
 
