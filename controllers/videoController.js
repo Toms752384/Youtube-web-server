@@ -69,7 +69,6 @@ exports.editVideo = async (req, res) => {
   }
 };
 
-////////////////////////////////////////////////////////////////
 exports.getVideosByUserId = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -79,14 +78,3 @@ exports.getVideosByUserId = async (req, res) => {
     res.status(500).json({ message: 'Error fetching videos by user ID', error });
   }
 };
-////////////////////////////////////////////////////////////////
-
-
-// exports.getVideosByUserId = async (req, res) => {
-//   try {
-//     const videos = await Video.getVideosByUserId(req.params.userId);
-//     res.status(200).json(videos);
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error fetching videos', error: error.message });
-//   }
-// };

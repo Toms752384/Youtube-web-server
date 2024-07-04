@@ -1,14 +1,9 @@
-// tokenRoutes.js
 const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/usersController');
-
-
-/////////////////
 const jwt = require('jsonwebtoken');
-//////////////////////////////////
 
-// Middleware to authenticate token
+//middleware to authenticate token
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -22,10 +17,8 @@ const authenticateToken = (req, res, next) => {
     });
   };
 
-
-
-// add a token to a exist user that try to login
-router.post('/', usersController.createToken); // Use the root of this router for token generation
+//add a token to a exist user that try to login
+router.post('/', usersController.createToken); 
 
 module.exports = router;
 module.exports.authenticateToken = authenticateToken;

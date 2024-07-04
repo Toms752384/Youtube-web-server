@@ -5,14 +5,14 @@ const Video = require('./models/videoModel');
 const Comment = require('./models/commentModel');
 const addDefaultUsers = require('./addDefaultUsers');
 
-// Connect to MongoDB
+//connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/ourDatabase', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(async () => {
   console.log('Connected to MongoDB');
 
-  // Add default users and get their IDs
+  //add default users and get their IDs
   const defaultUsersIds = await addDefaultUsers();
   await uploadAllVideos(defaultUsersIds);
 
@@ -20,13 +20,13 @@ mongoose.connect('mongodb://localhost:27017/ourDatabase', {
   console.error('Failed to connect to MongoDB', err);
 });
 
-// Path to the localVideos directory
+//path to the localVideos directory
 const localVideosPath = path.join(__dirname, 'localVideos');
 const jsonFilePath = path.join(__dirname, 'public', 'videoList.json');
 
 console.log('JSON file path:', jsonFilePath);
 
-// Function to convert string numbers with suffixes (e.g., '8M', '10B') to actual numbers
+//function to convert string numbers with suffixes (e.g., '8M', '10B') to actual numbers
 function convertStringToNumber(value) {
   if (typeof value === 'string') {
     if (value.endsWith('M')) {
@@ -38,7 +38,7 @@ function convertStringToNumber(value) {
   return parseFloat(value);
 }
 
-// Function to convert a numeric time value to a valid date
+//function to convert a numeric time value to a valid date
 function convertTimeToDate(time) {
   if (!isNaN(time)) {
     const days = parseInt(time, 10);
@@ -46,10 +46,11 @@ function convertTimeToDate(time) {
     date.setDate(date.getDate() + days);
     return date;
   }
-  return new Date(time); // Convert ISO string to Date object if already in valid format
+  //convert string to Date object if already in valid format
+  return new Date(time); 
 }
 
-// Function to upload a video
+//function to upload a video
 async function uploadVideo(videoData, defaultUsersIds) {
   const { title, artist, views, time, subscribers, likes, description, avatar, videoUrl, comments } = videoData;
 
@@ -60,15 +61,15 @@ async function uploadVideo(videoData, defaultUsersIds) {
     return;
   }
 
-  // Convert views, subscribers to numbers and time to Date
+  //convert views, subscribers to numbers and time to Date
   const viewsNumber = convertStringToNumber(views);
   const subscribersNumber = convertStringToNumber(subscribers);
   const timeValue = convertTimeToDate(time);
 
-  // Create relative file path
+  //create relative file path
   const filePath = path.join('/localVideos', path.basename(videoUrl));
 
-  // Validate video data
+  //validate video data
   if (!title || !artist || !videoUrl) {
     console.error('Missing required video data:', videoData);
     return;
@@ -102,7 +103,7 @@ async function uploadVideo(videoData, defaultUsersIds) {
   }
 }
 
-// Function to read and upload all videos from the JSON file
+//function to read and upload all videos from the JSON file
 async function uploadAllVideos(defaultUsersIds) {
   try {
     const videoData = await fs.readJson(jsonFilePath);

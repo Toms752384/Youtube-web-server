@@ -16,29 +16,22 @@ const storage = multer.diskStorage({
   }
 });
 
-//limit tot 5 gb
+//limit total 5 GB
 const upload = multer({
   storage: storage,
   limits: { fileSize: 5 * 1024 * 1024 * 1024 }
 });
 
-//correct paths for videos
-router.get('/:id/videos', videoController.getVideosByUserId); //oved noder
-router.post('/:id/videos', upload.single('video'), authenticateToken, videoController.uploadVideo); //noder neder
-router.get('/:id/videos/:pid', videoController.getVideo); //metoraf
-router.put('/:id/videos/:pid',authenticateToken , videoController.editVideo); //yey
-router.delete('/:id/videos/:pid',authenticateToken , videoController.deleteVideo); //nice
-router.get('/', videoController.getVideos); //oved
+router.get('/:id/videos', videoController.getVideosByUserId); 
+router.post('/:id/videos', upload.single('video'), authenticateToken, videoController.uploadVideo); 
+router.get('/:id/videos/:pid', videoController.getVideo); 
+router.put('/:id/videos/:pid',authenticateToken , videoController.editVideo); 
+router.delete('/:id/videos/:pid',authenticateToken , videoController.deleteVideo); 
+router.get('/', videoController.getVideos); 
 
-
-// # add coment #
-router.post('/:pid/comments/:id',authenticateToken , commentController.addComment); //oved
-// # get all comments by id of a video #
-router.get('/:pid/comments', commentController.getComments); //oved noder
-// # edit a comment #
+router.post('/:pid/comments/:id',authenticateToken , commentController.addComment); 
+router.get('/:pid/comments', commentController.getComments); 
 router.put('/:id/:pid/comments/:cid',authenticateToken , commentController.editComment); 
-// # delete a comment #
-router.delete('/:id/:pid/comments/:cid',authenticateToken , commentController.deleteComment); //oved
-
+router.delete('/:id/:pid/comments/:cid',authenticateToken , commentController.deleteComment); 
 
 module.exports = router;
