@@ -14,12 +14,13 @@ const fetchUsers = async (req, res) => {
   }
 };
 
-// add a new user function
+//add a new user function
 const addNewUser = async (req, res) => {
   if (req.file) {
-    // Assuming you want to convert the image to a base64 string
+    //assuming you want to convert the image to a base64 string
     const imgBase64 = req.file.buffer.toString('base64');
-    req.body.avatar = imgBase64; // append image in base64 to req.body
+    //append image in base64 to req.body
+    req.body.avatar = imgBase64;
   }
 
   try {
@@ -33,14 +34,13 @@ const addNewUser = async (req, res) => {
 
 const createToken = async (req, res) => {
   try {
-    // jwt.sign - give to the token a token
+    //jwt.sign - give to the token a token
     const token = jwt.sign({ userId: req.body.userId }, 'our_secret_maayan_tom_alon_2002!<3', { expiresIn: '30d' });
     res.status(200).json({ message : "token created successfully" , token  : token });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   } 
 };
-
 
 //login to an existing user function
 const getUser = async (req, res) => {
@@ -54,7 +54,6 @@ const getUser = async (req, res) => {
   }
 };
 
-
 //delete a user from the database function
 const deleteUser = async (req, res) => {
   try {
@@ -67,8 +66,6 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 }
-
-
 
 //function to edit a user
 const editUser = async (req, res) => {

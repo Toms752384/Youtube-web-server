@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-// system of files in node.js for delete 
+//system of files in node.js for delete 
 const fs = require('fs');
 const path = require('path');
 
-// the schema for a collection video
+//the schema for a collection video
 const videoSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -15,7 +15,7 @@ const videoSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  artist: { //fix this in order to connet with thie artist user
+  artist: { 
     type: String,
     required: true
   },
@@ -126,8 +126,6 @@ videoSchema.statics.editVideo = async function (videoId, updateData) {
   }
 };
 
-
-/////////////////////////////////////////////////
 videoSchema.statics.getVideosByUserId = async function (userId) {
   try {
     const videos = await this.find({ userId: userId });
@@ -136,17 +134,6 @@ videoSchema.statics.getVideosByUserId = async function (userId) {
     throw new Error('Error fetching videos by user ID: ' + err.message);
   }
 };
-///////////////////////////////////////////////////
-
-// videoSchema.statics.getVideosByUserId = async function (userId) {
-//   try {
-//     const videos = await this.find({ userId: userId }).populate('userId', 'username nickname avatar');
-//     return videos;
-//   } catch (err) {
-//     throw new Error('Error fetching videos by user ID: ' + err.message);
-//   }
-// };
-
 
 const Video = mongoose.model('Video', videoSchema);
 module.exports = Video;

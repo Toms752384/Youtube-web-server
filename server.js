@@ -13,7 +13,7 @@ const multer = require('multer');
 const server = express();
 const port = 80;
 
-//limit - add more?
+//limit 5GB
 server.use(bodyParser.json({ limit: '5gb' }));
 server.use(bodyParser.urlencoded({ limit: '5gb', extended: true, parameterLimit: 1000000 }));
 
@@ -40,13 +40,9 @@ server.options('*', cors({
 
 //routes of server
 server.use('/users', userRoutes);
-// server.use('/videos', videoRoutes);
-
-//correct routes
 server.use('/api/users', videoRoutes);
 server.use('/api/videos', videoRoutes);
 server.use('/api/users', userRoutes);
-// path to token post
 server.use('/api/tokens',tokenRoutes);
 
 //define the port
