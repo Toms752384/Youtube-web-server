@@ -6,9 +6,9 @@ hii dear bodek before we starting pleases follow the next steps  🔥 -
 1- clone to your own copmuter our server repo - https://github.com/Toms752384/Youtube-web-server.git
 2- clone to your own computer our react app for part 2! it is mean you need to clone the app from this repo link - https://github.com/AlonLivne007/YouTube-project-.git
    please notice you are on main_part_2 brunch! the "main" brunch is for the firat part of the project.
-3- Last but not least - make sure you download
+3- Last but not least - make sure you download to your own computer the - mongoDB app you can find it in google on their official website.
 
-For the bodek - General description of running the code:
+General description of running the code:
 1. Run "npm i" to install the dependencies of the server.
 
  2.Before running the server with nodemon, please write the followoing command in your terminal:
@@ -25,8 +25,9 @@ For the bodek - General description of running the code:
 This is to make it easier for you to check the assignment 💘
 
 3. Run the server using "nodemon server.js".
+   - please notice it might not work to you beacuse you need specific permissions from your computer so you can just do the reguler commend - node server.js
    
-4. Enjoy!
+5. Enjoy!
 
 Our paths ( accoreding to what the assigment ask for and more ) - 
 
