@@ -1,7 +1,12 @@
 # Youtube-web-server
 Web server for youtube project
 
-repo link - https://github.com/Toms752384/Youtube-web-server.git
+First steps : 
+hii dear bodek before we starting pleases follow the next steps  🔥 -
+1- clone to your own copmuter our server repo - https://github.com/Toms752384/Youtube-web-server.git
+2- clone to your own computer our react app for part 2! it is mean you need to clone the app from this repo link - https://github.com/AlonLivne007/YouTube-project-.git
+   please notice you are on main_part_2 brunch! the "main" brunch is for the firat part of the project.
+3- Last but not least - make sure you download
 
 For the bodek - General description of running the code:
 1. Run "npm i" to install the dependencies of the server.
