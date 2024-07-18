@@ -71,15 +71,27 @@ const deleteUser = async (req, res) => {
 const editUser = async (req, res) => {
   try {
       console.log(`Attempting to edit user with ID: ${req.params.id}`);
-      //create an object to send to the mdel function
+      //create an object to send to the model function
       const updateData = {
           nickname: req.body.nickname,
       };
-      //if a photo was added, add to the object
+    //handle base64 avatar
+    if (req.body.avatar) {
+      console.log("Avatar base64 received");
+      const base64Data = req.body.avatar.replace(/^data:image\/\w+;base64,/, "");
+      updateData.avatar = `data:image/png;base64,${base64Data}`;
+    } else {
+      console.log("No avatar base64 received.");
+    }
+      //handle file avatar
       if (req.file) {
+          console.log("Avatar file received:", req.file);
           const imgBase64 = req.file.buffer.toString('base64');
           updateData.avatar = `data:${req.file.mimetype};base64,${imgBase64}`;
         }
+      else{
+        console.log("No avatar file received.");
+      }
 
       const user = await User.editUser(req.params.id, updateData);
       if (!user) {
