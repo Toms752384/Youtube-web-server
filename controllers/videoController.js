@@ -5,6 +5,12 @@ exports.uploadVideo = async (req, res) => {
     //log the request
     console.log('Received file:', req.file);
     console.log('Received body:', req.body);
+    console.log('Received userId:', req.params.userId);
+    
+    if (!req.file) {
+      console.error('No video file provided');
+      return res.status(400).json({ message: 'No video file provided' });
+    }
 
     //call the upload function
     const video = await Video.uploadVideo(req.file, req.body);
@@ -78,3 +84,17 @@ exports.getVideosByUserId = async (req, res) => {
     res.status(500).json({ message: 'Error fetching videos by user ID', error });
   }
 };
+
+exports.addView = async (req,res) => {
+  try{
+    console.log(`Attempting to add vieww video with ID: ${req.params.pid}`);
+    const video = await Video.addView(req.params.pid);
+    if (!video) {
+      return res.status(404).json({ message: 'Video not found' });
+    }
+    return res.status(200).json({ message: 'view added successfully', video });
+  }
+  catch(error){
+    res.status(500).json({ message: 'Error view added video', error });
+  }
+}

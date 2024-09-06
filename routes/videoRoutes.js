@@ -28,6 +28,8 @@ router.get('/:id/videos/:pid', videoController.getVideo);
 router.put('/:id/videos/:pid',authenticateToken , videoController.editVideo); 
 router.delete('/:id/videos/:pid',authenticateToken , videoController.deleteVideo); 
 router.get('/', videoController.getVideos); 
+router.put('/videos/:pid' , videoController.addView); 
+
 
 router.post('/:pid/comments/:id',authenticateToken , commentController.addComment); 
 router.get('/:pid/comments', commentController.getComments); 

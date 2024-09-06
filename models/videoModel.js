@@ -135,5 +135,19 @@ videoSchema.statics.getVideosByUserId = async function (userId) {
   }
 };
 
+videoSchema.statics.addView = async function (videoId) {
+  try {
+    const video = await this.findByIdAndUpdate(
+      videoId,
+      { $inc: { views: 1 } }, // Increment the views field by 1
+      { new: true }
+    );
+    return video;
+  } catch (err) {
+    throw new Error('Error updating video views: ' + err.message);
+  }
+};
+
+
 const Video = mongoose.model('Video', videoSchema);
 module.exports = Video;
