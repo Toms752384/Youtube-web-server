@@ -1,4 +1,82 @@
 const Video = require('../models/videoModel');
+const net = require('net');
+
+// Function to communicate with C++ server to get recommended videos
+async function getRecommendedVideosFromCppServer(userId, videoId) {
+  return new Promise((resolve, reject) => {
+    const serverAddress = '127.0.0.1'; // IP address of the C++ server
+    const serverPort = 5555; // The port the server is listening on
+    
+    // Create a connection to the C++ server
+    const client = new net.Socket();
+    
+    client.connect(serverPort, serverAddress, () => {
+      console.log('Connected to C++ server');
+      const message = `${userId}:${videoId}`;  // Send the user ID and video ID in the format "userId:videoId"
+      console.log(`Sending to server: ${message}`);
+      client.write(message);
+    });
+
+    // Receive response from the server
+    client.on('data', (data) => {
+      const response = data.toString();
+      const recommendedVideos = response.split(' ').slice(2); // Parse the recommended video IDs from the server response
+      console.log('Received recommended videos:', recommendedVideos);
+      client.destroy(); // Close the connection
+      resolve(recommendedVideos);
+    });
+
+    // Handle connection close
+    client.on('close', () => {
+      console.log('Connection to C++ server closed');
+    });
+
+    // Handle errors
+    client.on('error', (err) => {
+      console.error('Error connecting to C++ server:', err.message);
+      reject(err);
+    });
+  });
+}
+
+// Function to get recommended videos
+exports.getRecommendedVideos = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const videoId = req.params.videoId;
+
+    // Step 1: Get recommended videos from the C++ server
+    let recommendedVideoIds = await getRecommendedVideosFromCppServer(userId, videoId);
+
+    // Step 2: If the list is greater than 6, take the first 6, else fill randomly till 6
+    if (recommendedVideoIds.length > 6) {
+      recommendedVideoIds = recommendedVideoIds.slice(0, 6);
+    } else {
+      // Fetch all videos from MongoDB (or limit the query to prevent performance issues)
+      const allVideos = await Video.find().lean();
+      const remainingCount = 6 - recommendedVideoIds.length;
+
+      // Randomly select videos from all available videos to fill up to 6 if needed
+      while (recommendedVideoIds.length < 6 && allVideos.length > 0) {
+        const randomIndex = Math.floor(Math.random() * allVideos.length);
+        const randomVideo = allVideos[randomIndex];
+        if (!recommendedVideoIds.includes(randomVideo._id.toString())) {
+          recommendedVideoIds.push(randomVideo._id.toString());
+        }
+      }
+    }
+
+    // Step 3: Fetch the recommended videos from MongoDB based on the video IDs
+    const videos = await Video.find({ _id: { $in: recommendedVideoIds } });
+
+    // Step 4: Return the recommended videos to the client
+    res.status(200).json({ message: 'Recommended videos fetched successfully', videos });
+  } catch (error) {
+    console.error('Error fetching recommended videos:', error.message);
+    res.status(500).json({ message: 'Error fetching recommended videos', error });
+  }
+};
+
 
 exports.uploadVideo = async (req, res) => {
   try {

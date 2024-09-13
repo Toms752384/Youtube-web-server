@@ -36,4 +36,7 @@ router.get('/:pid/comments', commentController.getComments);
 router.put('/:id/:pid/comments/:cid',authenticateToken , commentController.editComment); 
 router.delete('/:id/:pid/comments/:cid',authenticateToken , commentController.deleteComment); 
 
+app.get('/recommendations/:userId/:videoId', videoController.getRecommendedVideos);
+
+
 module.exports = router;
