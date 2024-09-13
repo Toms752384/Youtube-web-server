@@ -27,5 +27,7 @@ router.get('/:id', usersController.getUser);
 router.delete('/:id',authenticateToken , usersController.deleteUser); 
 router.post('/', upload.single('avatar'), usersController.addNewUser); 
 router.put('/:id', upload.single('avatar'), authenticateToken , usersController.editUser) 
+router.get('/:id/videoHistory', authenticateToken, usersController.getVideoHistory);  // New route for fetching video history
+router.post('/:id/addVideoToHistory', authenticateToken, usersController.addVideoToHistory);  // New route for adding video to history
 
 module.exports = router;

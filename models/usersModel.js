@@ -17,7 +17,11 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String
-  }
+  },
+  watchedVideos: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Video'
+  }]
 })
 
 //static function to fetch all users
@@ -42,7 +46,7 @@ userSchema.statics.createUser = async function (userData) {
 };
 
 //static function to fetch a user using its username
-userSchema.statics.fetchUser = async function(userId) {
+userSchema.statics.fetchUser = async function (userId) {
   try {
     const user = await this.findById(userId);
     return user;
@@ -53,17 +57,17 @@ userSchema.statics.fetchUser = async function(userId) {
 };
 
 //static function to delete a user from the list
-userSchema.statics.deleteUser = async function(userId) {
-  try{
-      await this.findByIdAndDelete(userId);
+userSchema.statics.deleteUser = async function (userId) {
+  try {
+    await this.findByIdAndDelete(userId);
   }
-  catch(error){
+  catch (error) {
     throw new Error('Error deleting user: ' + error.message);
   }
 }
 
 //static function to edit a user
-userSchema.statics.editUser = async function(userId, updateData) {
+userSchema.statics.editUser = async function (userId, updateData) {
   try {
     const user = await this.findByIdAndUpdate(userId, { $set: updateData }, { new: true });
     return user;
@@ -72,6 +76,35 @@ userSchema.statics.editUser = async function(userId, updateData) {
     throw new Error('Error editing user: ' + error.message);
   }
 }
+
+
+
+// Method to add a video to the user's history
+userSchema.statics.addVideoToHistory = async function (userId, videoId) {
+  try {
+    const user = await this.findByIdAndUpdate(
+      userId,
+      { $addToSet: { watchedVideos: videoId } }, // Adds videoId to watchedVideos if it's not already present
+      { new: true }
+    ).populate('watchedVideos'); // Optionally populate watched videos
+    return user;
+  } catch (error) {
+    throw new Error('Error adding video to history: ' + error.message);
+  }
+};
+
+// Method to fetch the user's video history
+userSchema.statics.getVideoHistory = async function (userId) {
+  try {
+    const user = await this.findById(userId).populate('watchedVideos');
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return user.watchedVideos;
+  } catch (error) {
+    throw new Error('Error fetching video history: ' + error.message);
+  }
+};
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
