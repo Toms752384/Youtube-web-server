@@ -36,10 +36,10 @@ const createToken = async (req, res) => {
   try {
     //jwt.sign - give to the token a token
     const token = jwt.sign({ userId: req.body.userId }, 'our_secret_maayan_tom_alon_2002!<3', { expiresIn: '30d' });
-    res.status(200).json({ message : "token created successfully" , token  : token });
+    res.status(200).json({ message: "token created successfully", token: token });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
-  } 
+  }
 };
 
 //login to an existing user function
@@ -47,7 +47,7 @@ const getUser = async (req, res) => {
   try {
     const loggedUser = await User.fetchUser(req.params.id);
     //send response
-    res.status(201).json({ message: 'User logged successfully', loggedInUser: loggedUser});
+    res.status(201).json({ message: 'User logged successfully', loggedInUser: loggedUser });
   }
   catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -70,11 +70,11 @@ const deleteUser = async (req, res) => {
 //function to edit a user
 const editUser = async (req, res) => {
   try {
-      console.log(`Attempting to edit user with ID: ${req.params.id}`);
-      //create an object to send to the model function
-      const updateData = {
-          nickname: req.body.nickname,
-      };
+    console.log(`Attempting to edit user with ID: ${req.params.id}`);
+    //create an object to send to the model function
+    const updateData = {
+      nickname: req.body.nickname,
+    };
     //handle base64 avatar
     if (req.body.avatar) {
       console.log("Avatar base64 received");
@@ -83,25 +83,48 @@ const editUser = async (req, res) => {
     } else {
       console.log("No avatar base64 received.");
     }
-      //handle file avatar
-      if (req.file) {
-          console.log("Avatar file received:", req.file);
-          const imgBase64 = req.file.buffer.toString('base64');
-          updateData.avatar = `data:${req.file.mimetype};base64,${imgBase64}`;
-        }
-      else{
-        console.log("No avatar file received.");
-      }
+    //handle file avatar
+    if (req.file) {
+      console.log("Avatar file received:", req.file);
+      const imgBase64 = req.file.buffer.toString('base64');
+      updateData.avatar = `data:${req.file.mimetype};base64,${imgBase64}`;
+    }
+    else {
+      console.log("No avatar file received.");
+    }
 
-      const user = await User.editUser(req.params.id, updateData);
-      if (!user) {
-          return res.status(404).json({ message: 'User not found' });
-      }
-      return res.status(200).json({ message: 'User edited successfully', user: user });
+    const user = await User.editUser(req.params.id, updateData);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    return res.status(200).json({ message: 'User edited successfully', user: user });
   } catch (error) {
-      res.status(500).json({ message: 'Error editing user', error });
+    res.status(500).json({ message: 'Error editing user', error });
   }
 };
 
-module.exports = { fetchUsers, addNewUser, getUser, deleteUser, editUser, createToken };
+// Add a video to user's watch history
+const addVideoToHistory = async (req, res) => {
+  try {
+    const { userId, videoId } = req.body;
+    const updatedUser = await User.addVideoToHistory(userId, videoId);
+    res.status(200).json({ message: 'Video added to history successfully', user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+// Fetch user's watch history
+const getVideoHistory = async (req, res) => {
+  try {
+    const userId = req.params.id;  // Assuming you pass the user ID in the URL
+    const history = await User.getVideoHistory(userId);
+    res.status(200).json({ message: 'Video history fetched successfully', history });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+module.exports = { fetchUsers, addNewUser, getUser, deleteUser, editUser,
+   createToken, addVideoToHistory, getVideoHistory };
 
