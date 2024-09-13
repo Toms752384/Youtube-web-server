@@ -103,28 +103,7 @@ const editUser = async (req, res) => {
   }
 };
 
-// Add a video to user's watch history
-const addVideoToHistory = async (req, res) => {
-  try {
-    const { userId, videoId } = req.body;
-    const updatedUser = await User.addVideoToHistory(userId, videoId);
-    res.status(200).json({ message: 'Video added to history successfully', user: updatedUser });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-};
-
-// Fetch user's watch history
-const getVideoHistory = async (req, res) => {
-  try {
-    const userId = req.params.id;  // Assuming you pass the user ID in the URL
-    const history = await User.getVideoHistory(userId);
-    res.status(200).json({ message: 'Video history fetched successfully', history });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-};
 
 module.exports = { fetchUsers, addNewUser, getUser, deleteUser, editUser,
-   createToken, addVideoToHistory, getVideoHistory };
+   createToken };
 

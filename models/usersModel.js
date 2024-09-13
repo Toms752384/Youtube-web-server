@@ -17,11 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String
-  },
-  watchedVideos: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Video'
-  }]
+  }
 })
 
 //static function to fetch all users
@@ -76,35 +72,6 @@ userSchema.statics.editUser = async function (userId, updateData) {
     throw new Error('Error editing user: ' + error.message);
   }
 }
-
-
-
-// Method to add a video to the user's history
-userSchema.statics.addVideoToHistory = async function (userId, videoId) {
-  try {
-    const user = await this.findByIdAndUpdate(
-      userId,
-      { $addToSet: { watchedVideos: videoId } }, // Adds videoId to watchedVideos if it's not already present
-      { new: true }
-    ).populate('watchedVideos'); // Optionally populate watched videos
-    return user;
-  } catch (error) {
-    throw new Error('Error adding video to history: ' + error.message);
-  }
-};
-
-// Method to fetch the user's video history
-userSchema.statics.getVideoHistory = async function (userId) {
-  try {
-    const user = await this.findById(userId).populate('watchedVideos');
-    if (!user) {
-      throw new Error('User not found');
-    }
-    return user.watchedVideos;
-  } catch (error) {
-    throw new Error('Error fetching video history: ' + error.message);
-  }
-};
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
