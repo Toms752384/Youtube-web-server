@@ -49,28 +49,30 @@ exports.getRecommendedVideos = async (req, res) => {
     let recommendedVideoIds = await getRecommendedVideosFromCppServer(userId, videoId);
 
     // Step 2: If the list is greater than 6, take the first 6, else fill randomly till 6
-    if (recommendedVideoIds.length > 6) {
-      recommendedVideoIds = recommendedVideoIds.slice(0, 6);
-    } else {
+    // if (recommendedVideoIds.length >= 6) {
+      // recommendedVideoIds = recommendedVideoIds.slice(0, 6);
+    // } else {
       // Fetch all videos from MongoDB (or limit the query to prevent performance issues)
       const allVideos = await Video.find().lean();
-      const remainingCount = 6 - recommendedVideoIds.length;
+      console.log(allVideos); //
+      // const remainingCount = 6 - recommendedVideoIds.length;
 
-      // Randomly select videos from all available videos to fill up to 6 if needed
-      while (recommendedVideoIds.length < 6 && allVideos.length > 0) {
-        const randomIndex = Math.floor(Math.random() * allVideos.length);
-        const randomVideo = allVideos[randomIndex];
-        if (!recommendedVideoIds.includes(randomVideo._id.toString())) {
-          recommendedVideoIds.push(randomVideo._id.toString());
-        }
-      }
-    }
+      // // Randomly select videos from all available videos to fill up to 6 if needed
+      // while (recommendedVideoIds.length < 6) {
+      //   const randomIndex = Math.floor(Math.random() * allVideos.length);
+      //   const randomVideo = allVideos[randomIndex];
+      //   if (!recommendedVideoIds.includes(randomVideo._id.toString())) {
+      //     recommendedVideoIds.push(randomVideo._id.toString());
+      //   }
+      // }
+    // }
 
     // Step 3: Fetch the recommended videos from MongoDB based on the video IDs
-    const videos = await Video.find({ _id: { $in: recommendedVideoIds } });
+    // const videos = await Video.find({ _id: { $in: recommendedVideoIds } });
 
     // Step 4: Return the recommended videos to the client
-    res.status(200).json({ message: 'Recommended videos fetched successfully', videos });
+    res.status(200).json({ message: 'Recommended videos fetched successfully', videos: allVideos });
+    console.log("again");
   } catch (error) {
     console.error('Error fetching recommended videos:', error.message);
     res.status(500).json({ message: 'Error fetching recommended videos', error });
