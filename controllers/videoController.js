@@ -40,7 +40,6 @@ async function getRecommendedVideosFromCppServer(userId, videoId) {
 }
 
 // Function to get recommended videos
-// Function to get recommended videos based on the most views
 exports.getRecommendedVideos = async (req, res) => {
   try {
     //fetch videos from server
