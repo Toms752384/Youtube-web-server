@@ -42,41 +42,29 @@ async function getRecommendedVideosFromCppServer(userId, videoId) {
 // Function to get recommended videos
 exports.getRecommendedVideos = async (req, res) => {
   try {
+    //fetch videos from server
     const userId = req.params.userId;
     const videoId = req.params.videoId;
-
-    // Step 1: Get recommended videos from the C++ server
     let recommendedVideoIds = await getRecommendedVideosFromCppServer(userId, videoId);
 
-    // Step 2: If the list is greater than 6, take the first 6, else fill randomly till 6
-    if (recommendedVideoIds.length > 6) {
-      recommendedVideoIds = recommendedVideoIds.slice(0, 6);
-    } else {
-      // Fetch all videos from MongoDB (or limit the query to prevent performance issues)
-      const allVideos = await Video.find().lean();
-      const remainingCount = 6 - recommendedVideoIds.length;
+    // Fetch the top 6 videos with the most views
+    const topVideos = await Video.find()
+      .sort({ views: -1 }) // Sort videos by views in descending order
+      .limit(6)             // Limit the result to 6 videos
+      .lean();              // Get plain JavaScript objects
 
-      // Randomly select videos from all available videos to fill up to 6 if needed
-      while (recommendedVideoIds.length < 6 && allVideos.length > 0) {
-        const randomIndex = Math.floor(Math.random() * allVideos.length);
-        const randomVideo = allVideos[randomIndex];
-        if (!recommendedVideoIds.includes(randomVideo._id.toString())) {
-          recommendedVideoIds.push(randomVideo._id.toString());
-        }
-      }
-    }
+    console.log(topVideos);
 
-    // Step 3: Fetch the recommended videos from MongoDB based on the video IDs
-    const videos = await Video.find({ _id: { $in: recommendedVideoIds } });
-
-    // Step 4: Return the recommended videos to the client
-    res.status(200).json({ message: 'Recommended videos fetched successfully', videos });
+    res.status(200).json({
+      message: 'Recommended videos fetched successfully',
+      videos: topVideos
+    });
+    console.log("Recommended videos fetched successfully");
   } catch (error) {
     console.error('Error fetching recommended videos:', error.message);
     res.status(500).json({ message: 'Error fetching recommended videos', error });
   }
 };
-
 
 exports.uploadVideo = async (req, res) => {
   try {
